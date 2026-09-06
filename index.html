@@ -3,334 +3,262 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Apontamentos de Obra</title>
+<title>Apontamentos de Obras</title>
 
 <style>
-
 *{
     box-sizing:border-box;
+    margin:0;
+    padding:0;
+    font-family:Arial, sans-serif;
 }
 
 body{
-    margin:0;
-    background:#eef4fb;
-    color:#172033;
-    font-family:Arial,Helvetica,sans-serif;
-}
-
-.app{
-    max-width:560px;
-    margin:auto;
+    background:linear-gradient(135deg,#eaf3ff,#f7f9fc);
+    color:#17233d;
     min-height:100vh;
-    background:#f8fbff;
 }
 
 header{
-    background:#172033;
+    background:linear-gradient(135deg,#101a31,#294575);
     color:white;
-    padding:22px 20px;
-    font-size:23px;
-    font-weight:800;
+    padding:28px 20px;
+    border-radius:0 0 30px 30px;
+    box-shadow:0 8px 25px #0002;
+}
+
+header h1{
+    font-size:28px;
+}
+
+header p{
+    margin-top:8px;
+    opacity:.8;
 }
 
 nav{
     display:flex;
-    gap:7px;
-    padding:10px;
-    background:white;
+    gap:10px;
+    padding:14px;
+    overflow-x:auto;
     position:sticky;
     top:0;
     z-index:10;
-    border-bottom:1px solid #dce5ef;
+    background:#edf4fcdd;
+    backdrop-filter:blur(10px);
 }
 
-nav button{
-    flex:1;
+nav button,
+.btn{
     border:0;
-    border-radius:10px;
-    padding:12px 5px;
-    font-weight:800;
-    background:#e5ecf4;
-    color:#172033;
+    padding:14px 18px;
+    border-radius:15px;
+    background:#dce6f3;
+    color:#17233d;
+    font-weight:bold;
+    cursor:pointer;
 }
 
-nav button.active{
-    background:#172033;
+nav button.active,
+.primary{
+    background:#17233d;
     color:white;
 }
 
-.page{
-    padding:16px;
+.whatsapp{
+    background:#16834b;
+    color:white;
 }
 
-.hidden{
-    display:none!important;
+.danger{
+    background:#ffe1e1;
+    color:#a00000;
+}
+
+main{
+    max-width:900px;
+    margin:auto;
+    padding:15px;
+}
+
+.page{
+    display:none;
+}
+
+.page.active{
+    display:block;
 }
 
 .card{
-    background:white;
-    border:1px solid #dce5ef;
-    border-radius:18px;
-    padding:17px;
-    margin-bottom:14px;
-    box-shadow:0 3px 12px rgba(0,0,0,.05);
+    background:#ffffffdd;
+    border:1px solid white;
+    border-radius:25px;
+    padding:22px;
+    margin-bottom:16px;
+    box-shadow:0 8px 30px #30476a18;
 }
 
 h2{
-    margin:0 0 6px;
-    font-size:25px;
+    margin-bottom:7px;
 }
 
 h3{
-    margin:0 0 12px;
+    margin-bottom:12px;
 }
 
-.subtitle{
-    color:#64748b;
+.muted{
+    color:#66758c;
+    margin-bottom:18px;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:14px;
 }
 
 label{
     display:block;
-    font-size:13px;
-    font-weight:800;
-    margin:13px 0 6px;
+    font-weight:bold;
+    margin-bottom:7px;
 }
 
 input,
 select{
     width:100%;
-    padding:13px;
-    border:1px solid #b8c5d4;
-    border-radius:10px;
+    padding:14px;
+    border-radius:14px;
+    border:1px solid #b9c5d4;
+    font-size:16px;
     background:white;
-    color:#172033;
-    font-size:16px;
 }
 
-.row{
-    display:grid;
-    grid-template-columns:1fr 1fr;
+input:focus,
+select:focus{
+    outline:3px solid #2f80ed22;
+    border-color:#2f80ed;
+}
+
+.actions{
+    display:flex;
+    flex-wrap:wrap;
     gap:10px;
+    margin-top:16px;
 }
 
-.button{
-    width:100%;
-    padding:14px;
-    border:0;
-    border-radius:11px;
-    font-size:16px;
-    font-weight:800;
-    margin-top:10px;
-    cursor:pointer;
+.actions .btn{
+    flex:1;
+    min-width:140px;
 }
 
-.green{
-    background:#198754;
-    color:white;
+.item{
+    background:white;
+    border:1px solid #dce3ec;
+    border-radius:18px;
+    padding:16px;
+    margin:10px 0;
 }
 
-.dark{
-    background:#172033;
-    color:white;
-}
-
-.gray{
-    background:#e5ecf4;
-    color:#172033;
-}
-
-.red{
-    background:#fee2e2;
-    color:#991b1b;
-}
-
-.orange{
-    background:#fff1dc;
-    color:#8a4b00;
-}
-
-.small{
-    color:#64748b;
-    font-size:13px;
-}
-
-.entry{
-    border:1px solid #dce5ef;
-    border-radius:13px;
-    padding:13px;
-    margin:9px 0;
-    background:#fbfdff;
-}
-
-.entry-title{
-    font-weight:800;
-    margin-bottom:7px;
-}
-
-.tag{
+.badge{
     display:inline-block;
-    background:#e8eef6;
-    border-radius:20px;
-    padding:5px 9px;
-    font-size:12px;
-    font-weight:700;
-    margin:3px 2px;
+    background:#e5efff;
+    color:#235aa5;
+    padding:6px 10px;
+    border-radius:50px;
+    font-size:13px;
+    font-weight:bold;
 }
 
-.preview{
+pre{
     white-space:pre-wrap;
-    background:#f8fafc;
-    border:1px solid #dce5ef;
-    border-radius:12px;
-    padding:14px;
-    line-height:1.55;
-    font-size:14px;
+    background:#f7f9fc;
+    border:1px solid #dce3ec;
+    border-radius:16px;
+    padding:15px;
+    line-height:1.5;
 }
 
-.success{
-    color:#198754;
-    font-weight:800;
+.notice{
+    background:#fff9dd;
+    border:1px solid #ead05c;
+    border-radius:18px;
+    padding:15px;
 }
 
-.info{
-    background:#eef6ff;
-    border:1px solid #cfe3f8;
-    padding:12px;
-    border-radius:12px;
-    margin-top:12px;
+.empty{
+    text-align:center;
+    color:#718096;
+    padding:25px;
 }
 
-.summary{
-    background:#f5f7fa;
-    border-radius:12px;
-    padding:13px;
-    margin-top:12px;
+@media(max-width:650px){
+    .grid{
+        grid-template-columns:1fr;
+    }
 }
-
 </style>
 </head>
 
 <body>
 
-<div class="app">
-
 <header>
-    🏗️ Apontamentos de Obra
+    <h1>📋 Apontamentos de Obras</h1>
+    <p>Registre, calcule, edite e envie seus apontamentos.</p>
 </header>
 
 <nav>
+    <button class="active" onclick="pagina('novo',this)">
+        ➕ Novo apontamento
+    </button>
 
-<button id="navNovo"
-        class="active"
-        onclick="mostrarPagina('novo')">
-    Novo
-</button>
+    <button onclick="pagina('historico',this)">
+        📚 Histórico
+    </button>
 
-<button id="navHistorico"
-        onclick="mostrarPagina('historico')">
-    Histórico
-</button>
-
-<button id="navRelatorio"
-        onclick="mostrarPagina('relatorio')">
-    Relatório
-</button>
-
+    <button onclick="pagina('config',this)">
+        ⚙️ Configurações
+    </button>
 </nav>
 
+<main>
 
-<!-- =====================================================
-     NOVO APONTAMENTO
-===================================================== -->
+<!-- ================= NOVO APONTAMENTO ================= -->
 
-<section id="paginaNovo" class="page">
+<section id="novo" class="page active">
 
 <div class="card">
 
-<h2 id="tituloFormulario">
-    Novo apontamento
-</h2>
+<h2>Novo apontamento</h2>
 
-<p class="subtitle">
-    Registre a aplicação diretamente no trecho.
+<p class="muted">
+Escolha o tipo de obra e preencha os dados.
 </p>
 
+<div class="grid">
 
+<div>
 <label>Data</label>
+<input type="date" id="data">
+</div>
 
-<input
-    id="data"
-    type="date"
->
-
-
+<div>
 <label>Tipo de apontamento</label>
 
-<select
-    id="tipo"
-    onchange="alterarTipo()"
->
+<select id="tipo" onchange="montarCampos()">
 
-<option value="CBUQ">
-    CBUQ
-</option>
-
-<option value="Terraplenagem">
-    Terraplenagem
-</option>
-
-<option value="TSD">
-    TSD
-</option>
-
-<option value="Sub-Base">
-    Sub-Base
-</option>
-
-<option value="Base">
-    Base
-</option>
-
-<option value="Drenagem">
-    Drenagem
-</option>
-
-<option value="Imprimação">
-    Imprimação
-</option>
+<option>CBUQ</option>
+<option>Terraplenagem</option>
+<option>TSD</option>
+<option>Sub-Base</option>
+<option>Base</option>
+<option>Reciclagem de Base</option>
+<option>Imprimação</option>
+<option>Drenagem</option>
 
 </select>
-
-
-<div class="row">
+</div>
 
 <div>
-
-<label>Km Inicial</label>
-
-<input
-    id="kmInicial"
-    placeholder="805+700"
->
-
-</div>
-
-
-<div>
-
-<label>Km Final</label>
-
-<input
-    id="kmFinal"
-    placeholder="806+500"
->
-
-</div>
-
-</div>
-
-
 <label>Sentido</label>
 
 <select id="sentido">
@@ -339,618 +267,341 @@ select{
 <option>Sul</option>
 <option>Leste</option>
 <option>Oeste</option>
-<option>Centro</option>
-<option>Ambos os sentidos</option>
-<option>Outro</option>
+<option>Duplo sentido</option>
 
 </select>
+</div>
 
-
-<!-- CAMADA -->
-
-<div id="campoCamada">
-
+<div>
 <label>Camada</label>
 
-<select id="camada">
-
-<option>1ª camada</option>
-<option>2ª camada</option>
-<option>3ª camada</option>
-<option>4ª camada</option>
-<option>5ª camada</option>
-
-</select>
+<select id="camada"></select>
 
 </div>
 
-
-<!-- LOCAL -->
-
-<label>Faixa / Local</label>
-
-<select
-    id="faixa"
-    onchange="alterarFaixa()"
->
-
-<option>Faixa 1</option>
-
-<option>Faixa 2</option>
-
-<option>Acostamento</option>
-
-<option>Faixa de Aceleração</option>
-
-<option>Faixa de Desaceleração</option>
-
-<option>Alça de Acesso</option>
-
-<option>Alça de Retorno</option>
-
-<option>Outro</option>
-
-</select>
-
-
-<label>Largura (m)</label>
-
-<input
-    id="largura"
-    type="number"
-    step="0.01"
->
-
-
-<div
-    id="infoLargura"
-    class="small"
->
+<div>
+<label>Km Inicial</label>
+<input id="kmi" placeholder="805+700">
 </div>
 
-
-<!-- ALTURA -->
-
-<div id="campoAltura">
-
-<label id="labelAltura">
-    Espessura / Altura (m)
-</label>
-
-<input
-    id="altura"
-    type="number"
-    step="0.001"
-    value="0.05"
->
+<div>
+<label>Km Final</label>
+<input id="kmf" placeholder="806+500">
+</div>
 
 </div>
 
+<div id="campos" class="grid" style="margin-top:15px"></div>
 
-<!-- DENSIDADE -->
+<div class="actions">
 
-<div id="campoDensidade">
-
-<label>
-    Densidade (t/m³)
-</label>
-
-<input
-    id="densidade"
-    type="number"
-    step="0.001"
-    value="2.362"
->
-
-</div>
-
-
-<div
-    id="informacaoFormula"
-    class="info"
->
-</div>
-
-
-<button
-    id="botaoSalvar"
-    class="button green"
-    onclick="salvarApontamento()"
->
+<button class="btn primary" onclick="salvarApontamento()">
 💾 Salvar apontamento
 </button>
 
-
-<button
-    id="botaoCancelar"
-    class="button gray hidden"
-    onclick="cancelarEdicao()"
->
-Cancelar edição
+<button class="btn" onclick="limparFormulario()">
+Limpar
 </button>
 
 </div>
 
+</div>
 
-<!-- APONTAMENTOS DO DIA -->
 
-<div
-    id="cardHoje"
-    class="card hidden"
->
+<!-- FILA PARA WHATSAPP -->
 
-<h3>
-    Apontamentos desta data
-</h3>
+<div class="card">
 
-<div id="listaHoje"></div>
+<h3>📤 Apontamentos para enviar</h3>
 
-<button
-    class="button dark"
-    onclick="abrirRelatorioDoDia()"
->
-📋 Ver relatório do dia
+<div id="fila"></div>
+
+<div class="actions">
+
+<button class="btn whatsapp" onclick="enviarWhatsApp()">
+🟢 Enviar todos no WhatsApp
 </button>
+
+<button class="btn" onclick="copiarMensagem()">
+📋 Copiar mensagem
+</button>
+
+<button class="btn danger" onclick="limparFila()">
+Limpar fila
+</button>
+
+</div>
 
 </div>
 
 </section>
 
 
-<!-- =====================================================
-     HISTÓRICO
-===================================================== -->
+<!-- ================= HISTÓRICO ================= -->
 
-<section
-    id="paginaHistorico"
-    class="page hidden"
->
+<section id="historico" class="page">
 
 <div class="card">
 
-<h2>
-    Histórico
-</h2>
+<h2>📚 Histórico</h2>
 
-<p class="subtitle">
-    Consulte, edite ou exclua seus apontamentos.
+<p class="muted">
+Todos os apontamentos salvos ficam aqui.
 </p>
-
-
-<label>
-    Filtrar por data
-</label>
-
-<input
-    id="filtroHistorico"
-    type="date"
-    onchange="mostrarHistorico()"
->
-
-
-<button
-    class="button gray"
-    onclick="limparFiltroHistorico()"
->
-Mostrar todos
-</button>
-
-</div>
-
 
 <div id="listaHistorico"></div>
 
+</div>
+
 </section>
 
 
-<!-- =====================================================
-     RELATÓRIO
-===================================================== -->
+<!-- ================= CONFIGURAÇÕES ================= -->
 
-<section
-    id="paginaRelatorio"
-    class="page hidden"
->
+<section id="config" class="page">
 
 <div class="card">
 
-<h2>
-    Relatório
-</h2>
+<h2>⚙️ Configurações</h2>
 
-<p class="subtitle">
-    Todos os apontamentos do dia em uma única mensagem.
+<p class="muted">
+Altere larguras, densidades e parâmetros.
 </p>
 
+<div class="grid">
 
-<label>
-    Data
-</label>
+<div>
+<label>Densidade Faixas 1 e 2</label>
+<input id="densFaixas" type="number" step="0.001">
+</div>
 
-<input
-    id="dataRelatorio"
-    type="date"
-    onchange="gerarRelatorio()"
->
+<div>
+<label>Densidade Acostamento</label>
+<input id="densAcostamento" type="number" step="0.001">
+</div>
 
+<div>
+<label>Largura Faixa 1 (m)</label>
+<input id="faixa1" type="number" step="0.01">
+</div>
 
-<button
-    class="button gray"
-    onclick="relatorioHoje()"
->
-Hoje
+<div>
+<label>Largura Faixa 2 (m)</label>
+<input id="faixa2" type="number" step="0.01">
+</div>
+
+<div>
+<label>Largura Faixa de Aceleração (m)</label>
+<input id="aceleracao" type="number" step="0.01">
+</div>
+
+<div>
+<label>Largura Faixa de Desaceleração (m)</label>
+<input id="desaceleracao" type="number" step="0.01">
+</div>
+
+<div>
+<label>Largura Acostamento (m)</label>
+<input id="acostamento" type="number" step="0.01">
+</div>
+
+<div>
+<label>Largura Alça de Acesso (m)</label>
+<input id="alca" type="number" step="0.01">
+</div>
+
+<div>
+<label>Espessura padrão CBUQ (m)</label>
+<input id="espessura" type="number" step="0.001">
+</div>
+
+</div>
+
+<div class="actions">
+
+<button class="btn primary" onclick="salvarConfiguracoes()">
+💾 Salvar configurações
 </button>
+
+</div>
 
 </div>
 
 
 <div class="card">
 
-<div
-    id="relatorioPreview"
-    class="preview"
->
-Nenhum apontamento encontrado.
+<h3>Tipos de Apontamentos</h3>
+
+<div class="notice">
+
+<b>1 - CBUQ</b><br>
+Toneladas — Comprimento × Largura × Espessura × Densidade
+
+<br><br>
+
+<b>2 - Terraplenagem</b><br>
+m³ — Comprimento × Largura × Altura<br>
+Até 10 camadas
+
+<br><br>
+
+<b>3 - TSD</b><br>
+m² — Comprimento × Largura
+
+<br><br>
+
+<b>4 - Sub-Base</b><br>
+m³ — Comprimento × Largura × Altura
+
+<br><br>
+
+<b>5 - Base</b><br>
+m³ — Comprimento × Largura × Altura
+
+<br><br>
+
+<b>6 - Reciclagem de Base</b><br>
+m³ — Comprimento × Largura × Altura
+
+<br><br>
+
+<b>7 - Imprimação</b><br>
+m² — Comprimento × Largura
+
+<br><br>
+
+<b>8 - Drenagem</b>
+
 </div>
-
-
-<button
-    class="button green"
-    onclick="copiarRelatorio()"
->
-📋 Copiar relatório
-</button>
-
-
-<button
-    class="button dark"
-    onclick="enviarWhatsApp()"
->
-💬 Enviar tudo pelo WhatsApp
-</button>
 
 </div>
 
 </section>
 
-</div>
+</main>
 
 
 <script>
 
 /* =====================================================
-   BANCO LOCAL
+CONFIGURAÇÕES PADRÃO
 ===================================================== */
 
-const CHAVE = "APONTAMENTOS_OBRA_V5";
+const CONFIG_PADRAO = {
 
-let idEditando = null;
+densFaixas:2.362,
 
-let textoRelatorio = "";
+densAcostamento:2.355,
+
+faixa1:4.10,
+
+faixa2:3.70,
+
+aceleracao:3.50,
+
+desaceleracao:3.50,
+
+acostamento:2.50,
+
+alca:3.50,
+
+espessura:0.05
+
+};
 
 
 /* =====================================================
-   DATA
+CARREGAR CONFIGURAÇÕES
 ===================================================== */
 
-function hoje(){
-
-    const d = new Date();
-
-    return d.getFullYear()
-        + "-"
-        + String(d.getMonth()+1).padStart(2,"0")
-        + "-"
-        + String(d.getDate()).padStart(2,"0");
-
-}
-
-
-function dataBR(data){
-
-    if(!data) return "";
-
-    return data
-        .split("-")
-        .reverse()
-        .join("/");
-
-}
+let config =
+JSON.parse(localStorage.getItem("configObras"))
+|| CONFIG_PADRAO;
 
 
 /* =====================================================
-   BANCO
+HISTÓRICO
 ===================================================== */
 
-function obterApontamentos(){
+let historico =
+JSON.parse(localStorage.getItem("historicoObras"))
+|| [];
 
-    return JSON.parse(
-        localStorage.getItem(CHAVE) || "[]"
+
+/* =====================================================
+FILA WHATSAPP
+===================================================== */
+
+let fila = [];
+
+let editandoId = null;
+
+
+/* =====================================================
+DATA
+===================================================== */
+
+function dataHoje(){
+
+    let d = new Date();
+
+    d = new Date(
+        d.getTime() -
+        d.getTimezoneOffset()*60000
     );
 
+    return d.toISOString().split("T")[0];
+
 }
 
+document.getElementById("data").value = dataHoje();
 
-function salvarBanco(lista){
 
-    localStorage.setItem(
-        CHAVE,
-        JSON.stringify(lista)
-    );
+/* =====================================================
+PÁGINAS
+===================================================== */
+
+function pagina(nome,botao){
+
+    document
+    .querySelectorAll(".page")
+    .forEach(p => p.classList.remove("active"));
+
+    document
+    .getElementById(nome)
+    .classList.add("active");
+
+    document
+    .querySelectorAll("nav button")
+    .forEach(b => b.classList.remove("active"));
+
+    if(botao)
+        botao.classList.add("active");
+
+    if(nome==="historico")
+        mostrarHistorico();
+
+    if(nome==="config")
+        carregarConfiguracoes();
 
 }
 
 
 /* =====================================================
-   FORMATAÇÃO
+CAMADAS
 ===================================================== */
 
-function numero(valor, casas=3){
+function carregarCamadas(){
 
-    return Number(valor).toLocaleString(
-        "pt-BR",
-        {
-            minimumFractionDigits:casas,
-            maximumFractionDigits:casas
-        }
-    );
+    let campo =
+    document.getElementById("camada");
 
-}
+    campo.innerHTML="";
 
+    for(let i=1;i<=10;i++){
 
-/* =====================================================
-   KM
-===================================================== */
-
-function converterKm(valor){
-
-    valor = String(valor)
-        .replace(",",".")
-        .trim();
-
-    const partes = valor.split("+");
-
-    if(partes.length === 2){
-
-        const km = parseFloat(partes[0]);
-
-        const metros = parseFloat(partes[1]);
-
-        if(!isNaN(km) && !isNaN(metros)){
-
-            return km * 1000 + metros;
-
-        }
-
-    }
-
-    return parseFloat(valor);
-
-}
-
-
-/* =====================================================
-   CONFIGURAÇÃO
-===================================================== */
-
-function alterarTipo(){
-
-    const tipo =
-        document.getElementById("tipo").value;
-
-
-    const campoCamada =
-        document.getElementById("campoCamada");
-
-    const campoAltura =
-        document.getElementById("campoAltura");
-
-    const campoDensidade =
-        document.getElementById("campoDensidade");
-
-    const labelAltura =
-        document.getElementById("labelAltura");
-
-
-    campoCamada.classList.remove("hidden");
-
-    campoAltura.classList.remove("hidden");
-
-    campoDensidade.classList.add("hidden");
-
-
-    if(tipo === "CBUQ"){
-
-        campoDensidade.classList.remove("hidden");
-
-        labelAltura.innerText =
-            "Espessura (m)";
-
-        document.getElementById("altura").value =
-            "0.05";
-
-        document.getElementById("densidade").value =
-            "2.362";
-
-    }
-
-
-    else if(
-        tipo === "TSD" ||
-        tipo === "Imprimação"
-    ){
-
-        campoAltura.classList.add("hidden");
-
-        campoCamada.classList.add("hidden");
-
-    }
-
-
-    else if(tipo === "Drenagem"){
-
-        labelAltura.innerText =
-            "Altura / Profundidade (m)";
-
-    }
-
-
-    else{
-
-        labelAltura.innerText =
-            "Altura / Espessura (m)";
-
-    }
-
-
-    atualizarFormula();
-
-}
-
-
-function alterarFaixa(){
-
-    const faixa =
-        document.getElementById("faixa").value;
-
-    const largura =
-        document.getElementById("largura");
-
-
-    const larguras = {
-
-        "Faixa 1":4.10,
-
-        "Faixa 2":3.70,
-
-        "Acostamento":2.50,
-
-        "Faixa de Aceleração":3.50,
-
-        "Faixa de Desaceleração":3.50,
-
-        "Alça de Acesso":3.50
-
-    };
-
-
-    if(larguras[faixa] !== undefined){
-
-        largura.value =
-            larguras[faixa];
-
-        largura.readOnly = true;
-
-        document.getElementById(
-            "infoLargura"
-        ).innerText =
-            "Largura configurada: "
-            + larguras[faixa]
-            .toFixed(2)
-            .replace(".",",")
-            + " m";
-
-    }
-
-    else{
-
-        largura.readOnly = false;
-
-        document.getElementById(
-            "infoLargura"
-        ).innerText =
-            "Largura variável — informe a largura.";
-
-    }
-
-
-    if(
-        document.getElementById("tipo").value === "CBUQ"
-    ){
-
-        if(faixa === "Acostamento"){
-
-            document.getElementById(
-                "densidade"
-            ).value = "2.355";
-
-        }
-
-        else{
-
-            document.getElementById(
-                "densidade"
-            ).value = "2.362";
-
-        }
-
-    }
-
-
-    atualizarFormula();
-
-}
-
-
-/* =====================================================
-   FÓRMULA
-===================================================== */
-
-function atualizarFormula(){
-
-    const tipo =
-        document.getElementById("tipo").value;
-
-    const info =
-        document.getElementById("informacaoFormula");
-
-
-    if(tipo === "CBUQ"){
-
-        info.innerText =
-            "CBUQ: Comprimento × Largura × Espessura × Densidade";
-
-    }
-
-    else if(tipo === "TSD"){
-
-        info.innerText =
-            "TSD: Comprimento × Largura = m²";
-
-    }
-
-    else if(tipo === "Imprimação"){
-
-        info.innerText =
-            "Imprimação: Comprimento × Largura = m²";
-
-    }
-
-    else if(tipo === "Terraplenagem"){
-
-        info.innerText =
-            "Terraplenagem: Comprimento × Largura × Altura = m³";
-
-    }
-
-    else if(tipo === "Sub-Base"){
-
-        info.innerText =
-            "Sub-Base: Comprimento × Largura × Altura = m³";
-
-    }
-
-    else if(tipo === "Base"){
-
-        info.innerText =
-            "Base: Comprimento × Largura × Altura = m³";
-
-    }
-
-    else if(tipo === "Drenagem"){
-
-        info.innerText =
-            "Drenagem: Comprimento × Largura × Altura = m³";
+        campo.innerHTML +=
+        `<option value="${i}">${i}ª camada</option>`;
 
     }
 
@@ -958,119 +609,81 @@ function atualizarFormula(){
 
 
 /* =====================================================
-   CALCULAR
+MONTAR CAMPOS
 ===================================================== */
 
-function calcularFormulario(){
+function montarCampos(){
 
-    const kmInicial =
-        document.getElementById("kmInicial").value;
+    let tipo =
+    document.getElementById("tipo").value;
 
-    const kmFinal =
-        document.getElementById("kmFinal").value;
-
-
-    const inicio =
-        converterKm(kmInicial);
-
-    const fim =
-        converterKm(kmFinal);
-
-
-    if(
-        isNaN(inicio) ||
-        isNaN(fim) ||
-        fim <= inicio
-    ){
-
-        alert(
-            "Confira os Kms inicial e final."
-        );
-
-        return null;
-
-    }
-
-
-    const tipo =
-        document.getElementById("tipo").value;
-
-    const largura =
-        parseFloat(
-            document.getElementById("largura").value
-        );
-
-
-    if(
-        isNaN(largura) ||
-        largura <= 0
-    ){
-
-        alert("Informe a largura.");
-
-        return null;
-
-    }
-
-
-    const comprimento =
-        fim - inicio;
-
-
-    let altura = 0;
-
-    let densidade = 0;
-
-    let quantidade = 0;
-
-    let unidade = "";
-
-    let calculo = "";
+    let campos =
+    document.getElementById("campos");
 
 
     /* CBUQ */
 
-    if(tipo === "CBUQ"){
+    if(tipo==="CBUQ"){
 
-        altura =
-            parseFloat(
-                document.getElementById("altura").value
-            );
+        campos.innerHTML=`
 
-        densidade =
-            parseFloat(
-                document.getElementById("densidade").value
-            );
+        <div>
 
+        <label>Faixa</label>
 
-        if(
-            isNaN(altura) ||
-            isNaN(densidade)
-        ){
+        <select id="faixa"
+        onchange="atualizarFaixa()">
 
-            alert(
-                "Confira a espessura e a densidade."
-            );
+        <option>Faixa 1</option>
+        <option>Faixa 2</option>
+        <option>Acostamento</option>
+        <option>Faixa de Aceleração</option>
+        <option>Faixa de Desaceleração</option>
+        <option>Alça de Acesso</option>
 
-            return null;
+        </select>
 
-        }
+        </div>
 
 
-        quantidade =
-            comprimento *
-            largura *
-            altura *
-            densidade;
+        <div>
+
+        <label>Largura (m)</label>
+
+        <input
+        id="largura"
+        type="number"
+        step="0.01">
+
+        </div>
 
 
-        unidade = "ton";
+        <div>
 
-        calculo =
-            `${numero(comprimento)} × `
-            + `${numero(largura,2)} × `
-            + `${altura.toFixed(2)} × `
-            + `${densidade.toFixed(3)}`;
+        <label>Espessura (m)</label>
+
+        <input
+        id="altura"
+        type="number"
+        step="0.001">
+
+        </div>
+
+
+        <div>
+
+        <label>Densidade (t/m³)</label>
+
+        <input
+        id="densidade"
+        type="number"
+        step="0.001">
+
+        </div>
+
+        `;
+
+        atualizarFaixa();
 
     }
 
@@ -1078,19 +691,56 @@ function calcularFormulario(){
     /* TSD / IMPRIMAÇÃO */
 
     else if(
-        tipo === "TSD" ||
-        tipo === "Imprimação"
+        tipo==="TSD" ||
+        tipo==="Imprimação"
     ){
 
-        quantidade =
-            comprimento *
-            largura;
+        campos.innerHTML=`
 
-        unidade = "m²";
+        <div>
 
-        calculo =
-            `${numero(comprimento)} × `
-            + `${numero(largura,2)}`;
+        <label>Largura (m)</label>
+
+        <input
+        id="largura"
+        type="number"
+        step="0.01">
+
+        </div>
+
+        `;
+
+    }
+
+
+    /* DRENAGEM */
+
+    else if(tipo==="Drenagem"){
+
+        campos.innerHTML=`
+
+        <div>
+
+        <label>Descrição</label>
+
+        <input
+        id="descricao"
+        placeholder="Ex: Sarjeta, bueiro...">
+
+        </div>
+
+        <div>
+
+        <label>Quantidade</label>
+
+        <input
+        id="quantidade"
+        type="number"
+        step="0.01">
+
+        </div>
+
+        `;
 
     }
 
@@ -1099,64 +749,227 @@ function calcularFormulario(){
 
     else{
 
-        altura =
-            parseFloat(
-                document.getElementById("altura").value
-            );
+        campos.innerHTML=`
+
+        <div>
+
+        <label>Largura (m)</label>
+
+        <input
+        id="largura"
+        type="number"
+        step="0.01">
+
+        </div>
 
 
-        if(
-            isNaN(altura) ||
-            altura <= 0
-        ){
+        <div>
 
-            alert(
-                "Informe a altura/espessura."
-            );
+        <label>Altura (m)</label>
 
-            return null;
+        <input
+        id="altura"
+        type="number"
+        step="0.001">
 
-        }
+        </div>
+
+        `;
+
+    }
+
+}
 
 
-        quantidade =
-            comprimento *
-            largura *
-            altura;
+/* =====================================================
+ATUALIZAR FAIXA
+===================================================== */
 
-        unidade = "m³";
+function atualizarFaixa(){
 
-        calculo =
-            `${numero(comprimento)} × `
-            + `${numero(largura,2)} × `
-            + `${altura.toFixed(2)}`;
+    let faixa =
+    document.getElementById("faixa").value;
+
+    let largura;
+
+    if(faixa==="Faixa 1")
+        largura=config.faixa1;
+
+    else if(faixa==="Faixa 2")
+        largura=config.faixa2;
+
+    else if(faixa==="Acostamento")
+        largura=config.acostamento;
+
+    else if(faixa==="Faixa de Aceleração")
+        largura=config.aceleracao;
+
+    else if(faixa==="Faixa de Desaceleração")
+        largura=config.desaceleracao;
+
+    else if(faixa==="Alça de Acesso")
+        largura=config.alca;
+
+
+    document.getElementById("largura").value =
+    largura;
+
+
+    document.getElementById("altura").value =
+    config.espessura;
+
+
+    document.getElementById("densidade").value =
+
+    faixa==="Acostamento"
+
+    ? config.densAcostamento
+
+    : config.densFaixas;
+
+}
+
+
+/* =====================================================
+CONVERTER KM
+===================================================== */
+
+function kmParaMetros(km){
+
+    km =
+    String(km)
+    .replace("KM","")
+    .trim();
+
+    if(km.includes("+")){
+
+        let partes =
+        km.split("+");
+
+        return (
+            Number(partes[0])*1000
+            +
+            Number(partes[1])
+        );
+
+    }
+
+    return Number(km);
+
+}
+
+
+/* =====================================================
+FORMATAÇÃO
+===================================================== */
+
+function numero(valor,casas=3){
+
+    return Number(valor)
+    .toLocaleString("pt-BR",{
+
+        minimumFractionDigits:casas,
+
+        maximumFractionDigits:casas
+
+    });
+
+}
+
+
+/* =====================================================
+CRIAR APONTAMENTO
+===================================================== */
+
+function criarApontamento(){
+
+    let tipo =
+    document.getElementById("tipo").value;
+
+    let kmi =
+    document.getElementById("kmi").value;
+
+    let kmf =
+    document.getElementById("kmf").value;
+
+
+    let comprimento =
+    Math.abs(
+        kmParaMetros(kmf)
+        -
+        kmParaMetros(kmi)
+    );
+
+
+    let largura =
+    Number(
+        document.getElementById("largura")?.value
+    ) || 0;
+
+
+    let altura =
+    Number(
+        document.getElementById("altura")?.value
+    ) || 0;
+
+
+    let densidade =
+    Number(
+        document.getElementById("densidade")?.value
+    ) || 0;
+
+
+    let massa=0;
+
+    if(tipo==="CBUQ"){
+
+        massa =
+        comprimento *
+        largura *
+        altura *
+        densidade;
+
+    }
+
+    else if(
+        tipo==="TSD" ||
+        tipo==="Imprimação"
+    ){
+
+        massa =
+        comprimento *
+        largura;
+
+    }
+
+    else if(tipo!=="Drenagem"){
+
+        massa =
+        comprimento *
+        largura *
+        altura;
 
     }
 
 
     return {
 
-        id:
-            idEditando ||
-            Date.now(),
+        id: editandoId || Date.now(),
 
         data:
-            document.getElementById("data").value,
+        document.getElementById("data").value,
 
         tipo,
 
-        kmInicial,
-
-        kmFinal,
+        camada:
+        document.getElementById("camada").value,
 
         sentido:
-            document.getElementById("sentido").value,
+        document.getElementById("sentido").value,
 
-        camada:
-            document.getElementById("camada").value,
+        kmi,
 
-        faixa:
-            document.getElementById("faixa").value,
+        kmf,
 
         comprimento,
 
@@ -1166,11 +979,18 @@ function calcularFormulario(){
 
         densidade,
 
-        quantidade,
+        faixa:
+        document.getElementById("faixa")?.value || "",
 
-        unidade,
+        descricao:
+        document.getElementById("descricao")?.value || "",
 
-        calculo
+        quantidade:
+        Number(
+            document.getElementById("quantidade")?.value
+        ) || 0,
+
+        resultado:massa
 
     };
 
@@ -1178,564 +998,146 @@ function calcularFormulario(){
 
 
 /* =====================================================
-   SALVAR
+SALVAR
 ===================================================== */
 
 function salvarApontamento(){
 
-    const apontamento =
-        calcularFormulario();
+    if(
+        !document.getElementById("kmi").value ||
+        !document.getElementById("kmf").value
+    ){
 
+        alert("Informe o Km inicial e final.");
 
-    if(!apontamento)
         return;
 
-
-    let lista =
-        obterApontamentos();
+    }
 
 
-    const indice =
-        lista.findIndex(
-            x => x.id === apontamento.id
+    let apontamento =
+    criarApontamento();
+
+
+    if(editandoId){
+
+        historico =
+        historico.map(x =>
+            x.id===editandoId
+            ? apontamento
+            : x
         );
 
-
-    if(indice >= 0){
-
-        lista[indice] =
-            apontamento;
-
-        alert(
-            "Apontamento atualizado! ✅"
-        );
+        editandoId=null;
 
     }
 
     else{
 
-        lista.push(
-            apontamento
-        );
-
-        alert(
-            "Apontamento salvo! ✅"
-        );
+        historico.push(apontamento);
 
     }
 
 
-    salvarBanco(lista);
-
-
-    idEditando = null;
-
-
-    limparFormulario();
-
-
-    mostrarApontamentosHoje();
-
-}
-
-
-/* =====================================================
-   LIMPAR
-===================================================== */
-
-function limparFormulario(){
-
-    document.getElementById(
-        "tituloFormulario"
-    ).innerText =
-        "Novo apontamento";
-
-
-    document.getElementById(
-        "botaoSalvar"
-    ).innerText =
-        "💾 Salvar apontamento";
-
-
-    document.getElementById(
-        "botaoCancelar"
-    ).classList.add("hidden");
-
-
-    idEditando = null;
-
-
-    document.getElementById(
-        "kmInicial"
-    ).value = "";
-
-    document.getElementById(
-        "kmFinal"
-    ).value = "";
-
-
-    document.getElementById(
-        "data"
-    ).value = hoje();
-
-
-    document.getElementById(
-        "tipo"
-    ).value = "CBUQ";
-
-
-    document.getElementById(
-        "sentido"
-    ).value = "Norte";
-
-
-    document.getElementById(
-        "camada"
-    ).value = "1ª camada";
-
-
-    document.getElementById(
-        "faixa"
-    ).value = "Faixa 1";
-
-
-    document.getElementById(
-        "altura"
-    ).value = "0.05";
-
-
-    document.getElementById(
-        "densidade"
-    ).value = "2.362";
-
-
-    alterarTipo();
-
-    alterarFaixa();
-
-}
-
-
-/* =====================================================
-   EDITAR
-===================================================== */
-
-function editarApontamento(id){
-
-    const lista =
-        obterApontamentos();
-
-
-    const x =
-        lista.find(
-            item => item.id === id
-        );
-
-
-    if(!x)
-        return;
-
-
-    idEditando = id;
-
-
-    mostrarPagina("novo");
-
-
-    document.getElementById(
-        "tituloFormulario"
-    ).innerText =
-        "Editar apontamento";
-
-
-    document.getElementById(
-        "botaoSalvar"
-    ).innerText =
-        "💾 Salvar alterações";
-
-
-    document.getElementById(
-        "botaoCancelar"
-    ).classList.remove("hidden");
-
-
-    document.getElementById(
-        "data"
-    ).value =
-        x.data;
-
-
-    document.getElementById(
-        "tipo"
-    ).value =
-        x.tipo;
-
-
-    document.getElementById(
-        "kmInicial"
-    ).value =
-        x.kmInicial;
-
-
-    document.getElementById(
-        "kmFinal"
-    ).value =
-        x.kmFinal;
-
-
-    document.getElementById(
-        "sentido"
-    ).value =
-        x.sentido;
-
-
-    document.getElementById(
-        "camada"
-    ).value =
-        x.camada;
-
-
-    document.getElementById(
-        "faixa"
-    ).value =
-        x.faixa;
-
-
-    document.getElementById(
-        "largura"
-    ).value =
-        x.largura;
-
-
-    document.getElementById(
-        "altura"
-    ).value =
-        x.altura;
-
-
-    document.getElementById(
-        "densidade"
-    ).value =
-        x.densidade;
-
-
-    alterarTipo();
-
-    document.getElementById(
-        "largura"
-    ).value =
-        x.largura;
-
-}
-
-
-/* =====================================================
-   CANCELAR EDIÇÃO
-===================================================== */
-
-function cancelarEdicao(){
-
-    limparFormulario();
-
-    mostrarApontamentosHoje();
-
-}
-
-
-/* =====================================================
-   EXCLUIR
-===================================================== */
-
-function excluirApontamento(id){
-
-    if(
-        !confirm(
-            "Tem certeza que deseja excluir este apontamento?"
-        )
-    )
-        return;
-
-
-    let lista =
-        obterApontamentos()
-        .filter(
-            x => x.id !== id
-        );
-
-
-    salvarBanco(lista);
-
-
-    mostrarHistorico();
-
-    mostrarApontamentosHoje();
-
-    gerarRelatorio();
-
-}
-
-
-/* =====================================================
-   APONTAMENTOS DE HOJE
-===================================================== */
-
-function mostrarApontamentosHoje(){
-
-    const dataAtual =
-        document.getElementById(
-            "data"
-        ).value;
-
-
-    const lista =
-        obterApontamentos()
-        .filter(
-            x => x.data === dataAtual
-        );
-
-
-    const card =
-        document.getElementById(
-            "cardHoje"
-        );
-
-
-    if(lista.length === 0){
-
-        card.classList.add("hidden");
-
-        return;
-
-    }
-
-
-    card.classList.remove("hidden");
-
-
-    document.getElementById(
-        "listaHoje"
-    ).innerHTML =
-
-        lista.map(
-            (x,index) => `
-
-            <div class="entry">
-
-                <div class="entry-title">
-
-                    ${String(index+1).padStart(2,"0")}
-                    —
-                    ${x.tipo}
-                    —
-                    ${x.faixa}
-
-                    ${
-                        x.camada
-                        ?
-                        " — " + x.camada
-                        :
-                        ""
-                    }
-
-                </div>
-
-                <span class="tag">
-                    Sentido: ${x.sentido}
-                </span>
-
-                <span class="tag">
-                    ${numero(x.quantidade)}
-                    ${x.unidade}
-                </span>
-
-                <br>
-
-                <button
-                    class="button gray"
-                    onclick="editarApontamento(${x.id})"
-                >
-                    ✏️ Editar
-                </button>
-
-            </div>
-
-        `
-
-        ).join("");
-
-}
-
-
-/* =====================================================
-   RELATÓRIO
-===================================================== */
-
-function montarRelatorio(lista){
-
-    if(lista.length === 0){
-
-        return "Nenhum apontamento encontrado para esta data.";
-
-    }
-
-
-    let texto =
-
-`APONTAMENTO DIÁRIO DE OBRA
-
-Data: ${dataBR(lista[0].data)}
-Quantidade de apontamentos: ${lista.length}
-
-`;
-
-
-    lista.forEach(
-        (x,index) => {
-
-            texto +=
-
-`${String(index+1).padStart(2,"0")} — ${x.tipo} — ${x.faixa}`;
-
-            if(x.camada){
-
-                texto +=
-                    ` — ${x.camada}`;
-
-            }
-
-
-            texto +=
-
-`
-Sentido: ${x.sentido}
-Trecho: KM ${x.kmInicial} a KM ${x.kmFinal}
-Comprimento: ${numero(x.comprimento)} m
-Largura: ${numero(x.largura,2)} m
-`;
-
-
-            if(x.tipo === "CBUQ"){
-
-                texto +=
-
-`Espessura: ${x.altura.toFixed(2)} m
-Densidade: ${x.densidade.toFixed(3)} t/m³
-Cálculo: ${x.calculo}
-Massa Aplicada: ${numero(x.quantidade)} ton
-
-`;
-
-            }
-
-
-            else if(
-                x.tipo === "TSD" ||
-                x.tipo === "Imprimação"
-            ){
-
-                texto +=
-
-`Cálculo: ${x.calculo}
-Área Executada: ${numero(x.quantidade)} m²
-
-`;
-
-            }
-
-
-            else{
-
-                texto +=
-
-`Altura: ${x.altura.toFixed(2)} m
-Cálculo: ${x.calculo}
-Volume Executado: ${numero(x.quantidade)} m³
-
-`;
-
-            }
-
-        }
-
+    localStorage.setItem(
+        "historicoObras",
+        JSON.stringify(historico)
     );
 
 
-    /* RESUMO */
-
-    const comprimentoTotal =
-        lista.reduce(
-            (total,x) =>
-                total + x.comprimento,
-            0
-        );
+    fila.push(apontamento);
 
 
-    const massaTotal =
-        lista
-        .filter(
-            x => x.unidade === "ton"
-        )
-        .reduce(
-            (total,x) =>
-                total + x.quantidade,
-            0
-        );
+    atualizarFila();
+
+    mostrarHistorico();
 
 
-    const areaTotal =
-        lista
-        .filter(
-            x => x.unidade === "m²"
-        )
-        .reduce(
-            (total,x) =>
-                total + x.quantidade,
-            0
-        );
+    alert("✅ Apontamento salvo!");
+
+}
 
 
-    const volumeTotal =
-        lista
-        .filter(
-            x => x.unidade === "m³"
-        )
-        .reduce(
-            (total,x) =>
-                total + x.quantidade,
-            0
-        );
+/* =====================================================
+TEXTO DO APONTAMENTO
+===================================================== */
 
+function textoApontamento(a){
+
+    let texto =
+
+`${a.tipo}`;
+
+    if(a.tipo==="CBUQ")
+        texto += ` — ${a.faixa}`;
+
+    texto += ` — ${a.camada}`;
 
     texto +=
+`\nSentido: ${a.sentido}`;
 
-`RESUMO DO DIA
+    texto +=
+`\nTrecho: KM ${a.kmi} a KM ${a.kmf}`;
 
-Comprimento total: ${numero(comprimentoTotal)} m`;
+    texto +=
+`\nComprimento: ${numero(a.comprimento,0)} m`;
+
+    texto +=
+`\nLargura: ${numero(a.largura,2)} m`;
 
 
-    if(massaTotal > 0){
+    if(a.tipo==="CBUQ"){
 
         texto +=
+`\nEspessura: ${numero(a.altura,3)} m`;
 
-`\nMassa Aplicada Total: ${numero(massaTotal)} ton`;
+        texto +=
+`\nDensidade: ${numero(a.densidade,3)} t/m³`;
+
+        texto +=
+`\nCálculo: ${numero(a.comprimento,0)} × ${numero(a.largura,2)} × ${numero(a.altura,3)} × ${numero(a.densidade,3)}`;
+
+        texto +=
+`\nMassa Aplicada: ${numero(a.resultado)} ton`;
 
     }
 
 
-    if(areaTotal > 0){
+    else if(
+        a.tipo==="TSD" ||
+        a.tipo==="Imprimação"
+    ){
 
         texto +=
+`\nCálculo: ${numero(a.comprimento,0)} × ${numero(a.largura,2)}`;
 
-`\nÁrea Total: ${numero(areaTotal)} m²`;
+        texto +=
+`\nResultado: ${numero(a.resultado)} m²`;
 
     }
 
 
-    if(volumeTotal > 0){
+    else if(a.tipo==="Drenagem"){
 
         texto +=
+`\nDescrição: ${a.descricao}`;
 
-`\nVolume Total: ${numero(volumeTotal)} m³`;
+        texto +=
+`\nQuantidade: ${numero(a.quantidade,2)}`;
+
+    }
+
+
+    else{
+
+        texto +=
+`\nAltura: ${numero(a.altura,3)} m`;
+
+        texto +=
+`\nCálculo: ${numero(a.comprimento,0)} × ${numero(a.largura,2)} × ${numero(a.altura,3)}`;
+
+        texto +=
+`\nResultado: ${numero(a.resultado)} m³`;
 
     }
 
@@ -1746,162 +1148,97 @@ Comprimento total: ${numero(comprimentoTotal)} m`;
 
 
 /* =====================================================
-   GERAR RELATÓRIO
+MENSAGEM COMPLETA
 ===================================================== */
 
-function gerarRelatorio(){
+function criarMensagem(lista){
 
-    const dataSelecionada =
-        document.getElementById(
-            "dataRelatorio"
-        ).value;
+    if(!lista.length)
+        return "";
 
 
-    const lista =
-        obterApontamentos()
-        .filter(
-            x =>
-                x.data ===
-                dataSelecionada
-        );
+    let data =
+    lista[0].data
+    .split("-")
+    .reverse()
+    .join("/");
 
 
-    textoRelatorio =
-        montarRelatorio(lista);
+    let mensagem =
+
+`APONTAMENTO DIÁRIO DE OBRAS
+
+Data: ${data}
+Quantidade de apontamentos: ${lista.length}
+
+`;
 
 
-    document.getElementById(
-        "relatorioPreview"
-    ).innerText =
-        textoRelatorio;
+    lista.forEach((a,index)=>{
 
-}
+        mensagem +=
 
+`${String(index+1).padStart(2,"0")} — ${textoApontamento(a)}
 
-/* =====================================================
-   COPIAR
-===================================================== */
+`;
 
-function copiarRelatorio(){
-
-    navigator.clipboard
-        .writeText(textoRelatorio)
-        .then(
-            () =>
-                alert(
-                    "Relatório copiado! ✅"
-                )
-        );
-
-}
+    });
 
 
-/* =====================================================
-   WHATSAPP
-===================================================== */
-
-function enviarWhatsApp(){
-
-    const url =
-        "https://wa.me/?text="
-        +
-        encodeURIComponent(
-            textoRelatorio
-        );
-
-
-    window.open(
-        url,
-        "_blank"
-    );
-
-}
-
-
-/* =====================================================
-   RELATÓRIO DE HOJE
-===================================================== */
-
-function relatorioHoje(){
-
-    document.getElementById(
-        "dataRelatorio"
-    ).value =
-        hoje();
-
-
-    gerarRelatorio();
-
-}
-
-
-/* =====================================================
-   ABRIR RELATÓRIO DO DIA
-===================================================== */
-
-function abrirRelatorioDoDia(){
-
-    document.getElementById(
-        "dataRelatorio"
-    ).value =
-        document.getElementById(
-            "data"
-        ).value;
-
-
-    mostrarPagina(
-        "relatorio"
+    let comprimentoTotal =
+    lista.reduce(
+        (total,a)=>
+        total+a.comprimento,
+        0
     );
 
 
-    gerarRelatorio();
-
-}
-
-
-/* =====================================================
-   HISTÓRICO
-===================================================== */
-
-function mostrarHistorico(){
-
-    const filtro =
-        document.getElementById(
-            "filtroHistorico"
-        ).value;
+    let massaTotal =
+    lista
+    .filter(a=>a.tipo==="CBUQ")
+    .reduce(
+        (total,a)=>
+        total+a.resultado,
+        0
+    );
 
 
-    let lista =
-        obterApontamentos()
-        .sort(
-            (a,b) =>
-                b.id - a.id
-        );
+    mensagem +=
+
+`RESUMO DO DIA
+
+Comprimento total: ${numero(comprimentoTotal,0)} m`;
 
 
-    if(filtro){
+    if(massaTotal>0){
 
-        lista =
-            lista.filter(
-                x =>
-                    x.data === filtro
-            );
+        mensagem +=
+
+`\nMassa Aplicada Total: ${numero(massaTotal)} ton`;
 
     }
 
 
-    const container =
-        document.getElementById(
-            "listaHistorico"
-        );
+    return mensagem.trim();
+
+}
 
 
-    if(lista.length === 0){
+/* =====================================================
+FILA
+===================================================== */
 
-        container.innerHTML =
+function atualizarFila(){
 
-        `<div class="card">
-            Nenhum apontamento encontrado.
+    let div =
+    document.getElementById("fila");
+
+
+    if(!fila.length){
+
+        div.innerHTML =
+        `<div class="empty">
+        Nenhum apontamento aguardando envio.
         </div>`;
 
         return;
@@ -1909,147 +1246,342 @@ function mostrarHistorico(){
     }
 
 
-    const grupos = {};
+    div.innerHTML =
+    fila.map((a,i)=>`
+
+    <div class="item">
+
+        <span class="badge">
+        ${i+1}
+        </span>
+
+        <b>
+        ${a.tipo}
+        </b>
+
+        ${a.tipo==="CBUQ"
+        ? " — "+a.faixa
+        : ""}
+
+        <br>
+
+        <span class="muted">
+
+        ${a.kmi}
+        →
+        ${a.kmf}
+
+        ·
+
+        ${a.sentido}
+
+        </span>
+
+        <div class="actions">
+
+        <button
+        class="btn danger"
+        onclick="removerFila(${i})">
+
+        Remover
+
+        </button>
+
+        </div>
+
+    </div>
+
+    `)
+    .join("");
+
+}
 
 
-    lista.forEach(
-        x => {
+function removerFila(index){
 
-            if(!grupos[x.data]){
+    fila.splice(index,1);
 
-                grupos[x.data] = [];
+    atualizarFila();
 
-            }
-
-            grupos[x.data].push(x);
-
-        }
-    );
+}
 
 
-    container.innerHTML =
+function limparFila(){
 
-        Object.entries(grupos)
-        .map(
-            ([data,items]) => `
+    fila=[];
 
-            <div class="card">
-
-                <h3>
-                    ${dataBR(data)}
-                    —
-                    ${items.length}
-                    apontamento(s)
-                </h3>
-
-
-                ${
-
-                    items.map(
-                        (x,index) => `
-
-                        <div class="entry">
-
-                            <div class="entry-title">
-
-                                ${String(index+1).padStart(2,"0")}
-                                —
-                                ${x.tipo}
-                                —
-                                ${x.faixa}
-
-                                ${
-                                    x.camada
-                                    ?
-                                    " — " + x.camada
-                                    :
-                                    ""
-                                }
-
-                            </div>
-
-
-                            <span class="tag">
-                                Sentido: ${x.sentido}
-                            </span>
-
-
-                            <div>
-                                KM
-                                ${x.kmInicial}
-                                →
-                                ${x.kmFinal}
-                            </div>
-
-
-                            <div>
-                                Comprimento:
-                                ${numero(x.comprimento)}
-                                m
-                            </div>
-
-
-                            <div>
-                                Resultado:
-                                <b>
-                                ${numero(x.quantidade)}
-                                ${x.unidade}
-                                </b>
-                            </div>
-
-
-                            <button
-                                class="button gray"
-                                onclick="editarApontamento(${x.id})"
-                            >
-                                ✏️ Editar
-                            </button>
-
-
-                            <button
-                                class="button red"
-                                onclick="excluirApontamento(${x.id})"
-                            >
-                                🗑️ Excluir
-                            </button>
-
-                        </div>
-
-                        `
-                    ).join("")
-
-                }
-
-
-                <button
-                    class="button dark"
-                    onclick="
-                        document.getElementById('dataRelatorio').value='${data}';
-                        mostrarPagina('relatorio');
-                        gerarRelatorio();
-                    "
-                >
-                    📋 Ver relatório do dia
-                </button>
-
-            </div>
-
-            `
-        )
-        .join("");
+    atualizarFila();
 
 }
 
 
 /* =====================================================
-   LIMPAR FILTRO
+COPIAR
 ===================================================== */
 
-function limparFiltroHistorico(){
+function copiarMensagem(){
 
-    document.getElementById(
-        "filtroHistorico"
-    ).value = "";
+    let texto =
+    criarMensagem(fila);
+
+
+    if(!texto){
+
+        alert("A fila está vazia.");
+
+        return;
+
+    }
+
+
+    navigator.clipboard
+    .writeText(texto)
+    .then(()=>{
+
+        alert("📋 Mensagem copiada!");
+
+    });
+
+}
+
+
+/* =====================================================
+WHATSAPP
+===================================================== */
+
+function enviarWhatsApp(){
+
+    let texto =
+    criarMensagem(fila);
+
+
+    if(!texto){
+
+        alert("A fila está vazia.");
+
+        return;
+
+    }
+
+
+    let url =
+    "https://wa.me/?text="
+    +
+    encodeURIComponent(texto);
+
+
+    window.open(url,"_blank");
+
+}
+
+
+/* =====================================================
+HISTÓRICO
+===================================================== */
+
+function mostrarHistorico(){
+
+    let div =
+    document.getElementById("listaHistorico");
+
+
+    if(!historico.length){
+
+        div.innerHTML =
+        `<div class="empty">
+        Nenhum apontamento salvo.
+        </div>`;
+
+        return;
+
+    }
+
+
+    div.innerHTML =
+
+    historico
+    .slice()
+    .reverse()
+    .map(a=>`
+
+    <div class="item">
+
+        <b>
+        ${a.tipo}
+        </b>
+
+        ${a.tipo==="CBUQ"
+        ? " — "+a.faixa
+        : ""}
+
+        — ${a.camada}
+
+        <br>
+
+        <span class="muted">
+
+        ${a.data.split("-").reverse().join("/")}
+
+        ·
+
+        ${a.sentido}
+
+        ·
+
+        KM ${a.kmi} a ${a.kmf}
+
+        </span>
+
+        <br><br>
+
+        <b>
+        ${numero(a.resultado)}
+        ${a.tipo==="CBUQ"
+        ?" ton"
+        :a.tipo==="TSD" || a.tipo==="Imprimação"
+        ?" m²"
+        :" m³"}
+        </b>
+
+        <div class="actions">
+
+        <button
+        class="btn primary"
+        onclick="editar(${a.id})">
+
+        ✏️ Editar
+
+        </button>
+
+        <button
+        class="btn danger"
+        onclick="excluir(${a.id})">
+
+        🗑️ Excluir
+
+        </button>
+
+        <button
+        class="btn"
+        onclick="copiarUm(${a.id})">
+
+        📋 Copiar
+
+        </button>
+
+        </div>
+
+    </div>
+
+    `)
+    .join("");
+
+}
+
+
+/* =====================================================
+EDITAR
+===================================================== */
+
+function editar(id){
+
+    let a =
+    historico.find(x=>x.id===id);
+
+
+    if(!a)
+        return;
+
+
+    editandoId=id;
+
+
+    document.getElementById("data").value =
+    a.data;
+
+
+    document.getElementById("tipo").value =
+    a.tipo;
+
+
+    document.getElementById("sentido").value =
+    a.sentido;
+
+
+    document.getElementById("camada").value =
+    a.camada;
+
+
+    document.getElementById("kmi").value =
+    a.kmi;
+
+
+    document.getElementById("kmf").value =
+    a.kmf;
+
+
+    montarCampos();
+
+
+    if(document.getElementById("faixa"))
+        document.getElementById("faixa").value =
+        a.faixa;
+
+
+    if(document.getElementById("largura"))
+        document.getElementById("largura").value =
+        a.largura;
+
+
+    if(document.getElementById("altura"))
+        document.getElementById("altura").value =
+        a.altura;
+
+
+    if(document.getElementById("densidade"))
+        document.getElementById("densidade").value =
+        a.densidade;
+
+
+    pagina(
+        "novo",
+        document.querySelector("nav button")
+    );
+
+
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+
+}
+
+
+/* =====================================================
+EXCLUIR
+===================================================== */
+
+function excluir(id){
+
+    if(
+        !confirm(
+        "Excluir este apontamento?"
+        )
+    )
+        return;
+
+
+    historico =
+    historico.filter(
+        a=>a.id!==id
+    );
+
+
+    localStorage.setItem(
+        "historicoObras",
+        JSON.stringify(historico)
+    );
+
 
     mostrarHistorico();
 
@@ -2057,123 +1589,123 @@ function limparFiltroHistorico(){
 
 
 /* =====================================================
-   PÁGINAS
+COPIAR UM
 ===================================================== */
 
-function mostrarPagina(pagina){
+function copiarUm(id){
 
-    document
-        .getElementById("paginaNovo")
-        .classList.add("hidden");
-
-
-    document
-        .getElementById("paginaHistorico")
-        .classList.add("hidden");
+    let a =
+    historico.find(x=>x.id===id);
 
 
-    document
-        .getElementById("paginaRelatorio")
-        .classList.add("hidden");
+    if(!a)
+        return;
 
 
-    document
-        .getElementById("navNovo")
-        .classList.remove("active");
+    copiarTexto(
+        criarMensagem([a])
+    );
+
+}
 
 
-    document
-        .getElementById("navHistorico")
-        .classList.remove("active");
+function copiarTexto(texto){
+
+    navigator.clipboard
+    .writeText(texto)
+    .then(()=>{
+
+        alert("📋 Copiado!");
+
+    });
+
+}
 
 
-    document
-        .getElementById("navRelatorio")
-        .classList.remove("active");
+/* =====================================================
+LIMPAR FORMULÁRIO
+===================================================== */
+
+function limparFormulario(){
+
+    document.getElementById("kmi").value="";
+    document.getElementById("kmf").value="";
+
+    editandoId=null;
+
+    montarCampos();
+
+}
 
 
-    if(pagina === "novo"){
+/* =====================================================
+CONFIGURAÇÕES
+===================================================== */
 
-        document
-            .getElementById("paginaNovo")
-            .classList.remove("hidden");
+function carregarConfiguracoes(){
 
+    Object.keys(config)
+    .forEach(chave=>{
 
-        document
-            .getElementById("navNovo")
-            .classList.add("active");
+        let campo =
+        document.getElementById(chave);
 
+        if(campo)
+            campo.value =
+            config[chave];
 
-        mostrarApontamentosHoje();
+    });
 
-    }
-
-
-    if(pagina === "historico"){
-
-        document
-            .getElementById("paginaHistorico")
-            .classList.remove("hidden");
+}
 
 
-        document
-            .getElementById("navHistorico")
-            .classList.add("active");
+function salvarConfiguracoes(){
+
+    Object.keys(CONFIG_PADRAO)
+    .forEach(chave=>{
+
+        let campo =
+        document.getElementById(chave);
+
+        if(campo){
+
+            config[chave] =
+            Number(campo.value);
+
+        }
+
+    });
 
 
-        mostrarHistorico();
-
-    }
-
-
-    if(pagina === "relatorio"){
-
-        document
-            .getElementById("paginaRelatorio")
-            .classList.remove("hidden");
+    localStorage.setItem(
+        "configObras",
+        JSON.stringify(config)
+    );
 
 
-        document
-            .getElementById("navRelatorio")
-            .classList.add("active");
+    montarCampos();
 
 
-        gerarRelatorio();
-
-    }
-
-
-    window.scrollTo(
-        0,
-        0
+    alert(
+    "✅ Configurações salvas!"
     );
 
 }
 
 
 /* =====================================================
-   INICIALIZAÇÃO
+INICIALIZAÇÃO
 ===================================================== */
 
-document.getElementById(
-    "data"
-).value =
-    hoje();
+carregarCamadas();
 
+montarCampos();
 
-document.getElementById(
-    "dataRelatorio"
-).value =
-    hoje();
+carregarConfiguracoes();
 
+atualizarFila();
 
-alterarTipo();
-
-alterarFaixa();
-
-mostrarApontamentosHoje();
-
-gerarRelatorio();
+mostrarHistorico();
 
 </script>
 
