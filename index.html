@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Apontamentos de Obras</title>
+<title>APONTAMENTOS DE OBRAS</title>
 
 <style>
 *{
@@ -21,13 +21,18 @@ body{
 header{
     background:linear-gradient(135deg,#111827,#374151);
     color:white;
-    padding:22px;
+    padding:24px 15px;
     text-align:center;
     box-shadow:0 3px 12px #0002;
 }
 
 header h1{
     font-size:28px;
+}
+
+header p{
+    margin-top:6px;
+    opacity:.8;
 }
 
 nav{
@@ -104,7 +109,9 @@ nav button.ativo{
     font-size:14px;
 }
 
-input,select,textarea{
+input,
+select,
+textarea{
     width:100%;
     padding:11px;
     border:1px solid #d1d5db;
@@ -113,7 +120,9 @@ input,select,textarea{
     outline:none;
 }
 
-input:focus,select:focus,textarea:focus{
+input:focus,
+select:focus,
+textarea:focus{
     border-color:#374151;
 }
 
@@ -124,7 +133,7 @@ input[readonly]{
 }
 
 textarea{
-    min-height:80px;
+    min-height:90px;
     resize:vertical;
 }
 
@@ -201,7 +210,7 @@ button{
 }
 
 .item p{
-    margin:4px 0;
+    margin:5px 0;
 }
 
 .item .acoes{
@@ -266,19 +275,26 @@ button{
     overflow:auto;
 }
 
-.oculto{
-    display:none !important;
-}
-
 .aviso{
     padding:12px;
     background:#fef3c7;
     border-radius:8px;
-    margin-top:10px;
+    margin-top:12px;
     font-size:14px;
 }
 
+.complemento-box{
+    margin-top:18px;
+}
+
+.vazio{
+    text-align:center;
+    padding:30px;
+    color:#6b7280;
+}
+
 @media(max-width:600px){
+
     header h1{
         font-size:22px;
     }
@@ -297,24 +313,38 @@ button{
 <body>
 
 <header>
-    <h1>🏗️ Apontamentos de Obras</h1>
+    <h1>🏗️ APONTAMENTOS DE OBRAS</h1>
     <p>Sistema de controle e apontamento de serviços</p>
 </header>
 
 <nav>
-    <button class="ativo" onclick="mostrarPagina('novo',this)">📝 Novo Apontamento</button>
-    <button onclick="mostrarPagina('historico',this)">📚 Histórico</button>
-    <button onclick="mostrarPagina('relatorios',this)">📊 Relatórios</button>
-    <button onclick="mostrarPagina('config',this)">⚙️ Configurações</button>
+    <button class="ativo" onclick="mostrarPagina('novo',this)">
+        📝 Novo Apontamento
+    </button>
+
+    <button onclick="mostrarPagina('historico',this)">
+        📚 Histórico
+    </button>
+
+    <button onclick="mostrarPagina('relatorios',this)">
+        📊 Relatórios
+    </button>
+
+    <button onclick="mostrarPagina('config',this)">
+        ⚙️ Configurações
+    </button>
 </nav>
 
 <div class="container">
 
-<!-- ================= NOVO APONTAMENTO ================= -->
+<!-- =====================================================
+     NOVO APONTAMENTO
+===================================================== -->
 
 <section id="novo" class="pagina ativa">
 
 <div class="card">
+
 <h2 id="tituloFormulario">📝 Novo Apontamento</h2>
 
 <input type="hidden" id="editandoId">
@@ -328,7 +358,9 @@ button{
 
 <div class="campo">
 <label>Tipo de Serviço</label>
+
 <select id="tipo" onchange="montarCampos()">
+
 <option value="CBUQ">CBUQ</option>
 <option value="Terraplenagem">Terraplenagem</option>
 <option value="TSD">TSD</option>
@@ -338,11 +370,13 @@ button{
 <option value="Imprimação">Imprimação</option>
 <option value="Drenagem">Drenagem</option>
 <option value="Sinalização">Sinalização</option>
+
 </select>
 </div>
 
 <div class="campo">
 <label>Sentido</label>
+
 <select id="sentido">
 <option>Norte</option>
 <option>Sul</option>
@@ -351,78 +385,165 @@ button{
 <option>Ambos</option>
 <option>Outro</option>
 </select>
+
 </div>
 
 <div class="campo">
 <label>Km Inicial</label>
-<input type="text" id="kmInicial" placeholder="805+700">
+
+<input
+type="text"
+id="kmInicial"
+placeholder="Ex: 805+700"
+oninput="formatarKmCampo(this)"
+>
+
 </div>
 
 <div class="campo">
 <label>Km Final</label>
-<input type="text" id="kmFinal" placeholder="806+500">
+
+<input
+type="text"
+id="kmFinal"
+placeholder="Ex: 806+500"
+oninput="formatarKmCampo(this)"
+>
+
 </div>
 
 </div>
+
+<div class="complemento-box campo">
+
+<label>📝 COMPLEMENTO</label>
+
+<textarea
+id="complemento"
+placeholder="Digite observações, informações adicionais ou detalhes do serviço..."
+></textarea>
+
 </div>
+
+</div>
+
 
 <div class="card">
+
 <h2>⚙️ Dados do Serviço</h2>
 
 <div id="camposServico"></div>
 
 <div class="resultado">
-    <div>Resultado do cálculo:</div>
-    <strong id="resultado">0</strong>
+
+<div>Resultado do cálculo:</div>
+
+<strong id="resultado">
+0
+</strong>
+
 </div>
 
 <div class="botoes">
-<button class="btn" onclick="salvarApontamento()" id="btnSalvar">
+
+<button
+class="btn"
+onclick="salvarApontamento()"
+id="btnSalvar"
+>
 💾 Salvar Apontamento
 </button>
 
-<button class="btn-amarelo" onclick="cancelarEdicao()" id="btnCancelar" style="display:none">
+<button
+class="btn-amarelo"
+onclick="cancelarEdicao()"
+id="btnCancelar"
+style="display:none"
+>
 ❌ Cancelar Edição
 </button>
 
-<button class="btn-azul" onclick="adicionarFila()">
+<button
+class="btn-azul"
+onclick="adicionarFila()"
+>
 ➕ Adicionar à Lista de Envio
 </button>
+
 </div>
 
 </div>
+
 
 <div class="card">
+
 <h2>📱 Lista para Envio</h2>
 
 <div id="fila"></div>
 
 <div class="botoes">
-<button class="btn-azul" onclick="copiarMensagem()">📋 Copiar Mensagem</button>
-<button class="btn-verde" onclick="enviarWhatsApp()">📱 Enviar WhatsApp</button>
-<button class="btn-vermelho" onclick="limparFila()">🗑️ Limpar Lista</button>
+
+<button
+class="btn-azul"
+onclick="copiarMensagem()"
+>
+📋 Copiar Mensagem
+</button>
+
+<button
+class="btn-verde"
+onclick="enviarWhatsApp()"
+>
+📱 Enviar WhatsApp
+</button>
+
+<button
+class="btn-vermelho"
+onclick="limparFila()"
+>
+🗑️ Limpar Lista
+</button>
+
 </div>
 
 </div>
 
 </section>
 
-<!-- ================= HISTÓRICO ================= -->
+
+<!-- =====================================================
+     HISTÓRICO
+===================================================== -->
 
 <section id="historico" class="pagina">
 
 <div class="card">
+
 <h2>📚 Histórico de Apontamentos</h2>
 
 <div class="grid">
+
 <div class="campo">
+
 <label>Filtrar por data</label>
-<input type="date" id="filtroHistorico" onchange="renderHistorico()">
+
+<input
+type="date"
+id="filtroHistorico"
+onchange="renderHistorico()"
+>
+
 </div>
 
 <div class="campo">
+
 <label>Tipo</label>
-<select id="filtroTipo" onchange="renderHistorico()">
+
+<select
+id="filtroTipo"
+onchange="renderHistorico()"
+>
+
 <option value="">Todos</option>
 <option>CBUQ</option>
 <option>Terraplenagem</option>
@@ -433,33 +554,51 @@ button{
 <option>Imprimação</option>
 <option>Drenagem</option>
 <option>Sinalização</option>
+
 </select>
+
 </div>
+
 </div>
+
 </div>
 
 <div id="listaHistorico" class="lista"></div>
 
 </section>
 
-<!-- ================= RELATÓRIOS ================= -->
+
+<!-- =====================================================
+     RELATÓRIOS
+===================================================== -->
 
 <section id="relatorios" class="pagina">
 
 <div class="card">
+
 <h2>📊 Relatórios</h2>
 
 <div class="grid">
 
 <div class="campo">
+
 <label>Data do relatório</label>
-<input type="date" id="dataRelatorio" onchange="gerarRelatorio()">
+
+<input
+type="date"
+id="dataRelatorio"
+onchange="gerarRelatorio()"
+>
+
 </div>
 
 </div>
+
 </div>
+
 
 <div class="card">
+
 <h2>📈 Resumo</h2>
 
 <div class="resumo-grid">
@@ -490,28 +629,49 @@ button{
 </div>
 
 </div>
+
 </div>
 
+
 <div class="card">
+
 <h2>📋 Relatório Detalhado</h2>
 
 <div id="relatorioDetalhado" class="lista"></div>
 
 <div class="botoes">
-<button class="btn-azul" onclick="copiarRelatorio()">📋 Copiar Relatório</button>
-<button class="btn-verde" onclick="enviarRelatorioWhatsApp()">📱 WhatsApp</button>
+
+<button
+class="btn-azul"
+onclick="copiarRelatorio()"
+>
+📋 Copiar Relatório
+</button>
+
+<button
+class="btn-verde"
+onclick="enviarRelatorioWhatsApp()"
+>
+📱 WhatsApp
+</button>
+
 </div>
 
 </div>
 
 </section>
 
-<!-- ================= CONFIGURAÇÕES ================= -->
+
+<!-- =====================================================
+     CONFIGURAÇÕES
+===================================================== -->
 
 <section id="config" class="pagina">
 
 <div class="card">
+
 <h2>⚙️ Configurações</h2>
+
 
 <div class="config-grupo">
 
@@ -520,23 +680,45 @@ button{
 <div class="grid">
 
 <div class="campo">
+
 <label>Densidade Faixa 1 (t/m³)</label>
-<input type="number" step="0.001" id="densFaixas">
+
+<input
+type="number"
+step="0.001"
+id="densFaixas"
+>
+
 </div>
 
 <div class="campo">
+
 <label>Densidade Faixa 2 (t/m³)</label>
-<input type="number" step="0.001" id="densFaixa2">
+
+<input
+type="number"
+step="0.001"
+id="densFaixa2"
+>
+
 </div>
 
 <div class="campo">
+
 <label>Densidade Acostamento (t/m³)</label>
-<input type="number" step="0.001" id="densAcostamento">
-</div>
+
+<input
+type="number"
+step="0.001"
+id="densAcostamento"
+>
 
 </div>
 
 </div>
+
+</div>
+
 
 <div class="config-grupo">
 
@@ -578,6 +760,7 @@ button{
 
 </div>
 
+
 <div class="config-grupo">
 
 <h3>📐 CBUQ — Espessura padrão</h3>
@@ -585,15 +768,26 @@ button{
 <div class="grid">
 
 <div class="campo">
+
 <label>Espessura padrão (m)</label>
-<input type="number" step="0.001" id="espessura">
-</div>
+
+<input
+type="number"
+step="0.001"
+id="espessura"
+>
 
 </div>
 
 </div>
 
-<button class="btn-verde" onclick="salvarConfig()">
+</div>
+
+
+<button
+class="btn-verde"
+onclick="salvarConfig()"
+>
 💾 Salvar Configurações
 </button>
 
@@ -603,48 +797,81 @@ button{
 
 </div>
 
+
 <script>
 
-let apontamentos = JSON.parse(localStorage.getItem("apontamentosObras")) || [];
-let filaEnvio = JSON.parse(localStorage.getItem("filaEnvioObras")) || [];
+/* =====================================================
+   BANCO LOCAL
+===================================================== */
 
-let config = JSON.parse(localStorage.getItem("configObras")) || {
+let apontamentos =
+JSON.parse(localStorage.getItem("apontamentosObras")) || [];
+
+let filaEnvio =
+JSON.parse(localStorage.getItem("filaEnvioObras")) || [];
+
+
+/* =====================================================
+   CONFIGURAÇÕES PADRÃO
+===================================================== */
+
+let config =
+JSON.parse(localStorage.getItem("configObras")) || {
+
     densFaixas:2.362,
     densFaixa2:2.362,
     densAcostamento:2.355,
+
     faixa1:4.10,
     faixa2:3.70,
     acostamento:2.50,
+
     alca:3.50,
     aceleracao:3.50,
     desaceleracao:3.50,
+
     espessura:0.05
+
 };
 
-document.getElementById("data").value =
+
+/* =====================================================
+   INICIALIZAÇÃO
+===================================================== */
+
+const hoje =
 new Date().toISOString().split("T")[0];
 
-document.getElementById("dataRelatorio").value =
-new Date().toISOString().split("T")[0];
+document.getElementById("data").value=hoje;
+document.getElementById("dataRelatorio").value=hoje;
 
 carregarConfig();
+
 montarCampos();
+
 renderFila();
+
 renderHistorico();
+
 gerarRelatorio();
 
 
-/* ================= NAVEGAÇÃO ================= */
+/* =====================================================
+   NAVEGAÇÃO
+===================================================== */
 
 function mostrarPagina(id,botao){
 
-    document.querySelectorAll(".pagina").forEach(p=>{
+    document.querySelectorAll(".pagina")
+    .forEach(p=>{
         p.classList.remove("ativa");
     });
 
-    document.getElementById(id).classList.add("ativa");
+    document.getElementById(id)
+    .classList.add("ativa");
 
-    document.querySelectorAll("nav button").forEach(b=>{
+    document.querySelectorAll("nav button")
+    .forEach(b=>{
         b.classList.remove("ativo");
     });
 
@@ -662,308 +889,673 @@ function mostrarPagina(id,botao){
 }
 
 
-/* ================= CAMPOS ================= */
+/* =====================================================
+   FORMATAÇÃO DO KM
+===================================================== */
+
+function formatarKmCampo(campo){
+
+    let valor=campo.value;
+
+    /*
+       Remove zeros à esquerda somente
+       da parte numérica.
+    */
+
+    if(valor.includes("+")){
+
+        let partes=valor.split("+");
+
+        let km=partes[0]
+        .replace(/\D/g,"")
+        .replace(/^0+/,"");
+
+        let metros=partes[1]
+        .replace(/\D/g,"");
+
+        if(km===""){
+            km="0";
+        }
+
+        campo.value=km+"+"+metros;
+
+    }else{
+
+        valor=valor
+        .replace(/\D/g,"")
+        .replace(/^0+/,"");
+
+        campo.value=valor;
+    }
+}
+
+
+/* =====================================================
+   CAMPOS DO SERVIÇO
+===================================================== */
 
 function montarCampos(){
 
-    const tipo=document.getElementById("tipo").value;
-    const div=document.getElementById("camposServico");
+    const tipo=
+    document.getElementById("tipo").value;
+
+    const div=
+    document.getElementById("camposServico");
 
     let html="";
+
+
+    /* ================= CBUQ ================= */
 
     if(tipo==="CBUQ"){
 
         html=`
+
         <div class="grid">
 
         <div class="campo">
+
         <label>Camada</label>
+
         <select id="camada">
-            <option>1ª camada</option>
-            <option>2ª camada</option>
-            <option>3ª camada</option>
-            <option>4ª camada</option>
+
+        <option>1ª camada</option>
+        <option>2ª camada</option>
+        <option>3ª camada</option>
+        <option>4ª camada</option>
+
         </select>
+
         </div>
 
+
         <div class="campo">
+
         <label>Faixa / Local</label>
-        <select id="faixa" onchange="atualizarFaixa()">
-            <option>Faixa 1</option>
-            <option>Faixa 2</option>
-            <option>Acostamento</option>
-            <option>Alça de Retorno/Acesso</option>
-            <option>Aceleração</option>
-            <option>Desaceleração</option>
+
+        <select
+        id="faixa"
+        onchange="atualizarFaixa()"
+        >
+
+        <option>Faixa 1</option>
+        <option>Faixa 2</option>
+        <option>Acostamento</option>
+        <option>Alça de Retorno/Acesso</option>
+        <option>Aceleração</option>
+        <option>Desaceleração</option>
+
         </select>
+
         </div>
 
+
         <div class="campo">
+
         <label>Largura (m)</label>
-        <input id="largura" type="number" step="0.01" readonly>
+
+        <input
+        id="largura"
+        type="number"
+        step="0.01"
+        readonly
+        >
+
         </div>
 
+
         <div class="campo">
+
         <label>Espessura (m)</label>
-        <input id="espessuraCampo" type="number" step="0.001">
+
+        <input
+        id="espessuraCampo"
+        type="number"
+        step="0.001"
+        readonly
+        >
+
         </div>
+
 
         <div class="campo">
+
         <label>Densidade (t/m³)</label>
-        <input id="densidade" type="number" step="0.001">
+
+        <input
+        id="densidade"
+        type="number"
+        step="0.001"
+        readonly
+        >
+
         </div>
 
         </div>
+
 
         <div class="aviso">
-        🔒 A largura do CBUQ é definida exclusivamente em <b>Configurações</b>.
+
+        🔒 Largura, espessura e densidade são
+        definidas exclusivamente em
+        <b>Configurações</b>.
+
         </div>
+
         `;
 
     }
+
+
+    /* ================= DRENAGEM ================= */
 
     else if(tipo==="Drenagem"){
 
         html=`
+
         <div class="grid">
 
         <div class="campo">
-        <label>Serviço de Drenagem</label>
-        <select id="servicoDrenagem" onchange="atualizarUnidadeDrenagem()">
 
-        <option value="Aplicação de Tubo PEAD">Aplicação de Tubo PEAD</option>
-        <option value="Aplicação de Tubo Concreto">Aplicação de Tubo Concreto</option>
-        <option value="Lançamento de Galeria">Lançamento de Galeria</option>
-        <option value="Ala Jusante">Ala Jusante</option>
-        <option value="Ala Montante">Ala Montante</option>
-        <option value="Caixa Coletora de Sarjeta">Caixa Coletora de Sarjeta</option>
-        <option value="Caixa de Passagem">Caixa de Passagem</option>
-        <option value="Sarjeta de Canteiro Central">Sarjeta de Canteiro Central</option>
-        <option value="Valeta de Proteção">Valeta de Proteção</option>
-        <option value="Meio Fio">Meio Fio</option>
-        <option value="Sarjeta Triangular">Sarjeta Triangular</option>
-        <option value="Sarjeta Trapezoidal">Sarjeta Trapezoidal</option>
-        <option value="Descida d'água">Descida d'água</option>
-        <option value="Entrada d'água">Entrada d'água</option>
-        <option value="Dissipador de energia">Dissipador de energia</option>
-        <option value="Gargula Simples">Gargula Simples</option>
-        <option value="Gargula Dupla">Gargula Dupla</option>
-        <option value="Boca de Lobo">Boca de Lobo</option>
-        <option value="Enrocamento de pedra armada">Enrocamento de pedra armada</option>
+        <label>Serviço de Drenagem</label>
+
+        <select
+        id="servicoDrenagem"
+        onchange="atualizarUnidadeDrenagem()"
+        >
+
+        <option value="Aplicação de Tubo PEAD">
+        Aplicação de Tubo PEAD
+        </option>
+
+        <option value="Aplicação de Tubo Concreto">
+        Aplicação de Tubo Concreto
+        </option>
+
+        <option value="Lançamento de Galeria">
+        Lançamento de Galeria
+        </option>
+
+        <option value="Ala Jusante">
+        Ala Jusante
+        </option>
+
+        <option value="Ala Montante">
+        Ala Montante
+        </option>
+
+        <option value="Caixa Coletora de Sarjeta">
+        Caixa Coletora de Sarjeta
+        </option>
+
+        <option value="Caixa de Passagem">
+        Caixa de Passagem
+        </option>
+
+        <option value="Sarjeta de Canteiro Central">
+        Sarjeta de Canteiro Central
+        </option>
+
+        <option value="Valeta de Proteção">
+        Valeta de Proteção
+        </option>
+
+        <option value="Meio Fio">
+        Meio Fio
+        </option>
+
+        <option value="Sarjeta Triangular">
+        Sarjeta Triangular
+        </option>
+
+        <option value="Sarjeta Trapezoidal">
+        Sarjeta Trapezoidal
+        </option>
+
+        <option value="Descida d'água">
+        Descida d'água
+        </option>
+
+        <option value="Entrada d'água">
+        Entrada d'água
+        </option>
+
+        <option value="Dissipador de energia">
+        Dissipador de energia
+        </option>
+
+        <option value="Gargula Simples">
+        Gargula Simples
+        </option>
+
+        <option value="Gargula Dupla">
+        Gargula Dupla
+        </option>
+
+        <option value="Boca de Lobo">
+        Boca de Lobo
+        </option>
+
+        <option value="Enrocamento de pedra armada">
+        Enrocamento de pedra armada
+        </option>
 
         </select>
+
         </div>
 
+
         <div class="campo">
+
         <label>Quantidade</label>
-        <input id="quantidade" type="number" step="0.01" value="0" oninput="calcular()">
+
+        <input
+        id="quantidade"
+        type="number"
+        step="0.01"
+        value="0"
+        oninput="calcular()"
+        >
+
         </div>
+
 
         <div class="campo">
+
         <label>Unidade</label>
-        <input id="unidade" readonly>
+
+        <input
+        id="unidade"
+        readonly
+        >
+
         </div>
 
         </div>
+
         `;
 
     }
+
+
+    /* ================= SINALIZAÇÃO ================= */
 
     else if(tipo==="Sinalização"){
 
         html=`
+
         <div class="grid">
 
         <div class="campo">
+
         <label>Serviço de Sinalização</label>
+
         <select id="servicoSinalizacao">
 
-        <option value="Instalação de Placas">1 - Instalação de Placas</option>
-        <option value="Pintura de Faixas">2 - Pintura de Faixas</option>
-        <option value="Defensa Metálica">3 - Defensa Metálica</option>
-        <option value="Tachas Refletivas">4 - Tachas Refletivas</option>
+        <option value="Instalação de Placas">
+        1 - Instalação de Placas
+        </option>
+
+        <option value="Pintura de Faixas">
+        2 - Pintura de Faixas
+        </option>
+
+        <option value="Defensa Metálica">
+        3 - Defensa Metálica
+        </option>
+
+        <option value="Tachas Refletivas">
+        4 - Tachas Refletivas
+        </option>
 
         </select>
+
         </div>
 
+
         <div class="campo">
+
         <label>Quantidade</label>
-        <input id="quantidade" type="number" step="0.01" value="0" oninput="calcular()">
+
+        <input
+        id="quantidade"
+        type="number"
+        step="0.01"
+        value="0"
+        oninput="calcular()"
+        >
+
         </div>
+
 
         <div class="campo">
+
         <label>Unidade</label>
+
         <select id="unidade">
-            <option>Und</option>
-            <option>m</option>
-            <option>m²</option>
+
+        <option>Und</option>
+        <option>m</option>
+        <option>m²</option>
+
         </select>
+
         </div>
 
         </div>
+
         `;
 
     }
 
-    else if(tipo==="TSD" || tipo==="Imprimação"){
+
+    /* ================= TSD / IMPRIMAÇÃO ================= */
+
+    else if(
+        tipo==="TSD" ||
+        tipo==="Imprimação"
+    ){
 
         html=`
+
         <div class="grid">
 
         <div class="campo">
-        <label>Largura (m)</label>
-        <input id="largura" type="number" step="0.01" value="0" oninput="calcular()">
+
+        <label>Comprimento (m)</label>
+
+        <input
+        id="comprimento"
+        type="number"
+        step="0.01"
+        value="0"
+        oninput="calcular()"
+        >
+
         </div>
+
 
         <div class="campo">
-        <label>Comprimento (m)</label>
-        <input id="comprimento" type="number" step="0.01" value="0" oninput="calcular()">
+
+        <label>Largura (m)</label>
+
+        <input
+        id="largura"
+        type="number"
+        step="0.01"
+        value="0"
+        oninput="calcular()"
+        >
+
         </div>
 
         </div>
+
         `;
 
     }
+
+
+    /* ================= TERRAPLENAGEM ================= */
+
+    else if(tipo==="Terraplenagem"){
+
+        html=`
+
+        <div class="grid">
+
+        <div class="campo">
+
+        <label>Camada</label>
+
+        <select id="camada">
+
+        <option>1ª camada</option>
+        <option>2ª camada</option>
+        <option>3ª camada</option>
+        <option>4ª camada</option>
+        <option>5ª camada</option>
+        <option>6ª camada</option>
+        <option>7ª camada</option>
+        <option>8ª camada</option>
+        <option>9ª camada</option>
+        <option>10ª camada</option>
+
+        </select>
+
+        </div>
+
+
+        <div class="campo">
+
+        <label>Comprimento (m)</label>
+
+        <input
+        id="comprimento"
+        type="number"
+        step="0.01"
+        value="0"
+        oninput="calcular()"
+        >
+
+        </div>
+
+
+        <div class="campo">
+
+        <label>Largura (m)</label>
+
+        <input
+        id="largura"
+        type="number"
+        step="0.01"
+        value="0"
+        oninput="calcular()"
+        >
+
+        </div>
+
+
+        <div class="campo">
+
+        <label>Altura (m)</label>
+
+        <input
+        id="altura"
+        type="number"
+        step="0.001"
+        value="0"
+        oninput="calcular()"
+        >
+
+        </div>
+
+        </div>
+
+        `;
+
+    }
+
+
+    /* ================= OUTROS VOLUMES ================= */
 
     else{
 
         html=`
+
         <div class="grid">
 
         <div class="campo">
+
         <label>Comprimento (m)</label>
-        <input id="comprimento" type="number" step="0.01" value="0" oninput="calcular()">
+
+        <input
+        id="comprimento"
+        type="number"
+        step="0.01"
+        value="0"
+        oninput="calcular()"
+        >
+
         </div>
 
+
         <div class="campo">
+
         <label>Largura (m)</label>
-        <input id="largura" type="number" step="0.01" value="0" oninput="calcular()">
+
+        <input
+        id="largura"
+        type="number"
+        step="0.01"
+        value="0"
+        oninput="calcular()"
+        >
+
         </div>
+
 
         <div class="campo">
-        <label>Altura/Espessura (m)</label>
-        <input id="altura" type="number" step="0.001" value="0" oninput="calcular()">
+
+        <label>Altura (m)</label>
+
+        <input
+        id="altura"
+        type="number"
+        step="0.001"
+        value="0"
+        oninput="calcular()"
+        >
+
         </div>
 
         </div>
+
         `;
 
-        if(tipo==="Terraplenagem"){
-
-            html=`
-            <div class="grid">
-
-            <div class="campo">
-            <label>Camada</label>
-            <select id="camada">
-                <option>1ª camada</option>
-                <option>2ª camada</option>
-                <option>3ª camada</option>
-                <option>4ª camada</option>
-                <option>5ª camada</option>
-                <option>6ª camada</option>
-                <option>7ª camada</option>
-                <option>8ª camada</option>
-                <option>9ª camada</option>
-                <option>10ª camada</option>
-            </select>
-            </div>
-
-            <div class="campo">
-            <label>Comprimento (m)</label>
-            <input id="comprimento" type="number" step="0.01" value="0" oninput="calcular()">
-            </div>
-
-            <div class="campo">
-            <label>Largura (m)</label>
-            <input id="largura" type="number" step="0.01" value="0" oninput="calcular()">
-            </div>
-
-            <div class="campo">
-            <label>Altura (m)</label>
-            <input id="altura" type="number" step="0.001" value="0" oninput="calcular()">
-            </div>
-
-            </div>
-            `;
-        }
     }
+
 
     div.innerHTML=html;
 
+
     if(tipo==="CBUQ"){
+
         atualizarFaixa();
-        document.getElementById("espessuraCampo").value=config.espessura;
+
+        document.getElementById(
+            "espessuraCampo"
+        ).value=config.espessura;
+
     }
+
 
     if(tipo==="Drenagem"){
         atualizarUnidadeDrenagem();
     }
 
+
     calcular();
 }
 
 
-/* ================= CBUQ ================= */
+/* =====================================================
+   CBUQ
+===================================================== */
 
 function atualizarFaixa(){
 
-    const faixa=document.getElementById("faixa");
+    const faixa=
+    document.getElementById("faixa");
+
     if(!faixa)return;
 
     let largura=0;
     let densidade=0;
 
+
     switch(faixa.value){
 
         case "Faixa 1":
+
             largura=config.faixa1;
             densidade=config.densFaixas;
+
             break;
+
 
         case "Faixa 2":
+
             largura=config.faixa2;
             densidade=config.densFaixa2;
+
             break;
+
 
         case "Acostamento":
+
             largura=config.acostamento;
             densidade=config.densAcostamento;
+
             break;
+
 
         case "Alça de Retorno/Acesso":
+
             largura=config.alca;
             densidade=config.densFaixas;
+
             break;
+
 
         case "Aceleração":
+
             largura=config.aceleracao;
             densidade=config.densFaixas;
+
             break;
+
 
         case "Desaceleração":
+
             largura=config.desaceleracao;
             densidade=config.densFaixas;
+
             break;
+
     }
 
-    document.getElementById("largura").value=largura;
-    document.getElementById("densidade").value=densidade;
+
+    document.getElementById("largura").value=
+    largura;
+
+    document.getElementById("densidade").value=
+    densidade;
+
+    document.getElementById("espessuraCampo").value=
+    config.espessura;
 
     calcular();
 }
 
 
-/* ================= DRENAGEM ================= */
+/* =====================================================
+   DRENAGEM
+===================================================== */
 
 function atualizarUnidadeDrenagem(){
 
-    const servico=document.getElementById("servicoDrenagem");
-    const unidade=document.getElementById("unidade");
+    const servico=
+    document.getElementById("servicoDrenagem");
+
+    const unidade=
+    document.getElementById("unidade");
 
     if(!servico || !unidade)return;
 
+
     const lineares=[
+
         "Aplicação de Tubo PEAD",
         "Aplicação de Tubo Concreto",
         "Lançamento de Galeria",
@@ -974,90 +1566,45 @@ function atualizarUnidadeDrenagem(){
         "Sarjeta Trapezoidal",
         "Descida d'água",
         "Enrocamento de pedra armada"
+
     ];
 
+
     if(lineares.includes(servico.value)){
+
         unidade.value="m";
+
     }else{
+
         unidade.value="Und";
+
     }
 
     calcular();
 }
 
 
-/* ================= CÁLCULO ================= */
-
-function calcular(){
-
-    const tipo=document.getElementById("tipo").value;
-
-    let resultado=0;
-
-    if(tipo==="CBUQ"){
-
-        const comprimento=parseFloat(document.getElementById("comprimento")?.value)||calcularComprimentoKm();
-        const largura=parseFloat(document.getElementById("largura")?.value)||0;
-        const espessura=parseFloat(document.getElementById("espessuraCampo")?.value)||0;
-        const densidade=parseFloat(document.getElementById("densidade")?.value)||0;
-
-        resultado=comprimento*largura*espessura*densidade;
-
-        document.getElementById("resultado").innerText=
-        resultado.toFixed(3)+" toneladas";
-
-    }
-
-    else if(tipo==="TSD" || tipo==="Imprimação"){
-
-        const comprimento=parseFloat(document.getElementById("comprimento")?.value)||0;
-        const largura=parseFloat(document.getElementById("largura")?.value)||0;
-
-        resultado=comprimento*largura;
-
-        document.getElementById("resultado").innerText=
-        resultado.toFixed(2)+" m²";
-    }
-
-    else if(tipo==="Drenagem" || tipo==="Sinalização"){
-
-        const quantidade=parseFloat(document.getElementById("quantidade")?.value)||0;
-        const unidade=document.getElementById("unidade")?.value||"";
-
-        resultado=quantidade;
-
-        document.getElementById("resultado").innerText=
-        resultado.toFixed(2)+" "+unidade;
-    }
-
-    else{
-
-        const comprimento=parseFloat(document.getElementById("comprimento")?.value)||0;
-        const largura=parseFloat(document.getElementById("largura")?.value)||0;
-        const altura=parseFloat(document.getElementById("altura")?.value)||0;
-
-        resultado=comprimento*largura*altura;
-
-        document.getElementById("resultado").innerText=
-        resultado.toFixed(2)+" m³";
-    }
-}
-
-
-/* ================= KM ================= */
+/* =====================================================
+   KM
+===================================================== */
 
 function kmParaNumero(km){
 
     if(!km)return 0;
 
-    km=String(km).replace(",",".").trim();
+    km=String(km).trim();
 
     if(km.includes("+")){
 
         const partes=km.split("+");
 
-        return parseFloat(partes[0])*1000+
-               parseFloat(partes[1]||0);
+        const kmPrincipal=
+        parseInt(partes[0])||0;
+
+        const metros=
+        parseInt(partes[1])||0;
+
+        return kmPrincipal*1000+metros;
     }
 
     return parseFloat(km)||0;
@@ -1066,103 +1613,373 @@ function kmParaNumero(km){
 
 function calcularComprimentoKm(){
 
-    const inicial=kmParaNumero(document.getElementById("kmInicial").value);
-    const final=kmParaNumero(document.getElementById("kmFinal").value);
+    const inicial=
+    kmParaNumero(
+        document.getElementById("kmInicial").value
+    );
+
+    const final=
+    kmParaNumero(
+        document.getElementById("kmFinal").value
+    );
 
     return Math.max(0,final-inicial);
 }
 
 
-/* ================= DADOS DO APONTAMENTO ================= */
+/* =====================================================
+   CÁLCULO
+===================================================== */
 
-function coletarDados(){
+function calcular(){
 
-    const tipo=document.getElementById("tipo").value;
+    const tipo=
+    document.getElementById("tipo").value;
 
-    let dados={
-        id:document.getElementById("editandoId").value || Date.now().toString(),
-        data:document.getElementById("data").value,
-        tipo,
-        sentido:document.getElementById("sentido").value,
-        kmInicial:document.getElementById("kmInicial").value,
-        kmFinal:document.getElementById("kmFinal").value,
-        criadoEm:new Date().toISOString()
-    };
+    let resultado=0;
+
 
     if(tipo==="CBUQ"){
 
-        dados.camada=document.getElementById("camada").value;
-        dados.servico=document.getElementById("faixa").value;
-        dados.largura=parseFloat(document.getElementById("largura").value)||0;
-        dados.espessura=parseFloat(document.getElementById("espessuraCampo").value)||0;
-        dados.densidade=parseFloat(document.getElementById("densidade").value)||0;
-        dados.comprimento=calcularComprimentoKm();
-        dados.resultado=dados.comprimento*dados.largura*dados.espessura*dados.densidade;
+        const comprimento=
+        calcularComprimentoKm();
+
+        const largura=
+        parseFloat(
+            document.getElementById("largura")?.value
+        )||0;
+
+        const espessura=
+        parseFloat(
+            document.getElementById("espessuraCampo")?.value
+        )||0;
+
+        const densidade=
+        parseFloat(
+            document.getElementById("densidade")?.value
+        )||0;
+
+
+        resultado=
+        comprimento*
+        largura*
+        espessura*
+        densidade;
+
+
+        document.getElementById("resultado").innerText=
+        resultado.toFixed(3)+" toneladas";
+
+    }
+
+
+    else if(
+        tipo==="TSD" ||
+        tipo==="Imprimação"
+    ){
+
+        const comprimento=
+        parseFloat(
+            document.getElementById("comprimento")?.value
+        )||0;
+
+        const largura=
+        parseFloat(
+            document.getElementById("largura")?.value
+        )||0;
+
+
+        resultado=
+        comprimento*largura;
+
+
+        document.getElementById("resultado").innerText=
+        resultado.toFixed(2)+" m²";
+
+    }
+
+
+    else if(
+        tipo==="Drenagem" ||
+        tipo==="Sinalização"
+    ){
+
+        const quantidade=
+        parseFloat(
+            document.getElementById("quantidade")?.value
+        )||0;
+
+        const unidade=
+        document.getElementById("unidade")?.value||"";
+
+
+        resultado=quantidade;
+
+
+        document.getElementById("resultado").innerText=
+        resultado.toFixed(2)+" "+unidade;
+
+    }
+
+
+    else{
+
+        const comprimento=
+        parseFloat(
+            document.getElementById("comprimento")?.value
+        )||0;
+
+        const largura=
+        parseFloat(
+            document.getElementById("largura")?.value
+        )||0;
+
+        const altura=
+        parseFloat(
+            document.getElementById("altura")?.value
+        )||0;
+
+
+        resultado=
+        comprimento*
+        largura*
+        altura;
+
+
+        document.getElementById("resultado").innerText=
+        resultado.toFixed(2)+" m³";
+
+    }
+}
+
+
+/* =====================================================
+   COLETAR DADOS
+===================================================== */
+
+function coletarDados(){
+
+    const tipo=
+    document.getElementById("tipo").value;
+
+
+    let dados={
+
+        id:
+        document.getElementById("editandoId").value
+        ||
+        Date.now().toString(),
+
+        data:
+        document.getElementById("data").value,
+
+        tipo:tipo,
+
+        sentido:
+        document.getElementById("sentido").value,
+
+        kmInicial:
+        document.getElementById("kmInicial").value,
+
+        kmFinal:
+        document.getElementById("kmFinal").value,
+
+        complemento:
+        document.getElementById("complemento").value,
+
+        criadoEm:
+        new Date().toISOString()
+
+    };
+
+
+    /* CBUQ */
+
+    if(tipo==="CBUQ"){
+
+        dados.camada=
+        document.getElementById("camada").value;
+
+        dados.servico=
+        document.getElementById("faixa").value;
+
+        dados.largura=
+        parseFloat(
+            document.getElementById("largura").value
+        )||0;
+
+        dados.espessura=
+        parseFloat(
+            document.getElementById("espessuraCampo").value
+        )||0;
+
+        dados.densidade=
+        parseFloat(
+            document.getElementById("densidade").value
+        )||0;
+
+        dados.comprimento=
+        calcularComprimentoKm();
+
+        dados.resultado=
+        dados.comprimento*
+        dados.largura*
+        dados.espessura*
+        dados.densidade;
+
         dados.unidade="ton";
 
     }
 
+
+    /* DRENAGEM */
+
     else if(tipo==="Drenagem"){
 
-        dados.servico=document.getElementById("servicoDrenagem").value;
-        dados.quantidade=parseFloat(document.getElementById("quantidade").value)||0;
-        dados.unidade=document.getElementById("unidade").value;
-        dados.resultado=dados.quantidade;
+        dados.servico=
+        document.getElementById(
+            "servicoDrenagem"
+        ).value;
+
+        dados.quantidade=
+        parseFloat(
+            document.getElementById("quantidade").value
+        )||0;
+
+        dados.unidade=
+        document.getElementById("unidade").value;
+
+        dados.resultado=
+        dados.quantidade;
 
     }
+
+
+    /* SINALIZAÇÃO */
 
     else if(tipo==="Sinalização"){
 
-        dados.servico=document.getElementById("servicoSinalizacao").value;
-        dados.quantidade=parseFloat(document.getElementById("quantidade").value)||0;
-        dados.unidade=document.getElementById("unidade").value;
-        dados.resultado=dados.quantidade;
+        dados.servico=
+        document.getElementById(
+            "servicoSinalizacao"
+        ).value;
+
+        dados.quantidade=
+        parseFloat(
+            document.getElementById("quantidade").value
+        )||0;
+
+        dados.unidade=
+        document.getElementById("unidade").value;
+
+        dados.resultado=
+        dados.quantidade;
 
     }
 
-    else if(tipo==="TSD" || tipo==="Imprimação"){
 
-        dados.comprimento=parseFloat(document.getElementById("comprimento").value)||0;
-        dados.largura=parseFloat(document.getElementById("largura").value)||0;
-        dados.resultado=dados.comprimento*dados.largura;
+    /* TSD / IMPRIMAÇÃO */
+
+    else if(
+        tipo==="TSD" ||
+        tipo==="Imprimação"
+    ){
+
+        dados.comprimento=
+        parseFloat(
+            document.getElementById("comprimento").value
+        )||0;
+
+        dados.largura=
+        parseFloat(
+            document.getElementById("largura").value
+        )||0;
+
+        dados.resultado=
+        dados.comprimento*
+        dados.largura;
+
         dados.unidade="m²";
 
     }
 
+
+    /* VOLUMES */
+
     else{
 
-        dados.camada=document.getElementById("camada")?.value || "";
-        dados.comprimento=parseFloat(document.getElementById("comprimento").value)||0;
-        dados.largura=parseFloat(document.getElementById("largura").value)||0;
-        dados.altura=parseFloat(document.getElementById("altura").value)||0;
-        dados.resultado=dados.comprimento*dados.largura*dados.altura;
+        dados.camada=
+        document.getElementById("camada")?.value||"";
+
+        dados.comprimento=
+        parseFloat(
+            document.getElementById("comprimento").value
+        )||0;
+
+        dados.largura=
+        parseFloat(
+            document.getElementById("largura").value
+        )||0;
+
+        dados.altura=
+        parseFloat(
+            document.getElementById("altura").value
+        )||0;
+
+        dados.resultado=
+        dados.comprimento*
+        dados.largura*
+        dados.altura;
+
         dados.unidade="m³";
+
     }
+
 
     return dados;
 }
 
 
-/* ================= SALVAR ================= */
+/* =====================================================
+   SALVAR
+===================================================== */
 
 function salvarApontamento(){
 
-    const dados=coletarDados();
-    const editando=document.getElementById("editandoId").value;
+    const dados=
+    coletarDados();
+
+    const editando=
+    document.getElementById("editandoId").value;
+
 
     if(editando){
 
-        const index=apontamentos.findIndex(x=>x.id===editando);
+        const index=
+        apontamentos.findIndex(
+            x=>x.id===editando
+        );
+
 
         if(index!==-1){
+
             apontamentos[index]=dados;
+
         }
 
-        const filaIndex=filaEnvio.findIndex(x=>x.id===editando);
+
+        const filaIndex=
+        filaEnvio.findIndex(
+            x=>x.id===editando
+        );
+
 
         if(filaIndex!==-1){
+
             filaEnvio[filaIndex]=dados;
+
         }
+
 
         alert("✅ Apontamento atualizado!");
 
@@ -1171,155 +1988,308 @@ function salvarApontamento(){
         apontamentos.push(dados);
 
         alert("✅ Apontamento salvo!");
+
     }
+
 
     salvarLocal();
 
     cancelarEdicao();
+
     renderHistorico();
+
     renderFila();
+
     gerarRelatorio();
 }
 
 
-/* ================= EDITAR ================= */
+/* =====================================================
+   EDITAR
+===================================================== */
 
 function editarApontamento(id){
 
-    const item=apontamentos.find(x=>x.id===id);
+    const item=
+    apontamentos.find(
+        x=>x.id===id
+    );
 
     if(!item)return;
 
-    document.getElementById("editandoId").value=item.id;
-    document.getElementById("data").value=item.data;
-    document.getElementById("tipo").value=item.tipo;
-    document.getElementById("sentido").value=item.sentido;
-    document.getElementById("kmInicial").value=item.kmInicial;
-    document.getElementById("kmFinal").value=item.kmFinal;
+
+    document.getElementById("editandoId").value=
+    item.id;
+
+    document.getElementById("data").value=
+    item.data;
+
+    document.getElementById("tipo").value=
+    item.tipo;
+
+    document.getElementById("sentido").value=
+    item.sentido;
+
+    document.getElementById("kmInicial").value=
+    item.kmInicial;
+
+    document.getElementById("kmFinal").value=
+    item.kmFinal;
+
+    document.getElementById("complemento").value=
+    item.complemento||"";
+
 
     montarCampos();
+
 
     if(item.tipo==="CBUQ"){
 
-        document.getElementById("camada").value=item.camada;
-        document.getElementById("faixa").value=item.servico;
+        document.getElementById("camada").value=
+        item.camada;
+
+        document.getElementById("faixa").value=
+        item.servico;
+
         atualizarFaixa();
 
-        document.getElementById("espessuraCampo").value=item.espessura;
-        document.getElementById("densidade").value=item.densidade;
+        document.getElementById("espessuraCampo").value=
+        item.espessura;
+
+        document.getElementById("densidade").value=
+        item.densidade;
 
     }
+
 
     else if(item.tipo==="Drenagem"){
 
-        document.getElementById("servicoDrenagem").value=item.servico;
+        document.getElementById(
+            "servicoDrenagem"
+        ).value=item.servico;
+
         atualizarUnidadeDrenagem();
 
-        document.getElementById("quantidade").value=item.quantidade;
+        document.getElementById(
+            "quantidade"
+        ).value=item.quantidade;
 
     }
+
 
     else if(item.tipo==="Sinalização"){
 
-        document.getElementById("servicoSinalizacao").value=item.servico;
-        document.getElementById("quantidade").value=item.quantidade;
-        document.getElementById("unidade").value=item.unidade;
+        document.getElementById(
+            "servicoSinalizacao"
+        ).value=item.servico;
+
+        document.getElementById(
+            "quantidade"
+        ).value=item.quantidade;
+
+        document.getElementById(
+            "unidade"
+        ).value=item.unidade;
 
     }
 
-    else if(item.tipo==="TSD" || item.tipo==="Imprimação"){
 
-        document.getElementById("comprimento").value=item.comprimento;
-        document.getElementById("largura").value=item.largura;
+    else if(
+        item.tipo==="TSD" ||
+        item.tipo==="Imprimação"
+    ){
+
+        document.getElementById(
+            "comprimento"
+        ).value=item.comprimento;
+
+        document.getElementById(
+            "largura"
+        ).value=item.largura;
 
     }
+
 
     else{
 
-        if(document.getElementById("camada"))
-            document.getElementById("camada").value=item.camada;
+        if(document.getElementById("camada")){
 
-        document.getElementById("comprimento").value=item.comprimento;
-        document.getElementById("largura").value=item.largura;
-        document.getElementById("altura").value=item.altura;
+            document.getElementById("camada").value=
+            item.camada;
+
+        }
+
+        document.getElementById(
+            "comprimento"
+        ).value=item.comprimento;
+
+        document.getElementById(
+            "largura"
+        ).value=item.largura;
+
+        document.getElementById(
+            "altura"
+        ).value=item.altura;
+
     }
+
 
     calcular();
 
-    document.getElementById("tituloFormulario").innerText=
+
+    document.getElementById(
+        "tituloFormulario"
+    ).innerText=
     "✏️ Editando Apontamento";
 
-    document.getElementById("btnSalvar").innerText=
+
+    document.getElementById(
+        "btnSalvar"
+    ).innerText=
     "💾 Atualizar Apontamento";
 
-    document.getElementById("btnCancelar").style.display="inline-block";
 
-    mostrarPagina("novo",document.querySelector("nav button"));
+    document.getElementById(
+        "btnCancelar"
+    ).style.display="inline-block";
+
+
+    mostrarPagina(
+        "novo",
+        document.querySelector("nav button")
+    );
 }
 
 
-/* ================= CANCELAR EDIÇÃO ================= */
+/* =====================================================
+   CANCELAR EDIÇÃO
+===================================================== */
 
 function cancelarEdicao(){
 
-    document.getElementById("editandoId").value="";
+    document.getElementById(
+        "editandoId"
+    ).value="";
 
-    document.getElementById("tituloFormulario").innerText=
+
+    document.getElementById(
+        "tituloFormulario"
+    ).innerText=
     "📝 Novo Apontamento";
 
-    document.getElementById("btnSalvar").innerText=
+
+    document.getElementById(
+        "btnSalvar"
+    ).innerText=
     "💾 Salvar Apontamento";
 
-    document.getElementById("btnCancelar").style.display="none";
+
+    document.getElementById(
+        "btnCancelar"
+    ).style.display="none";
+
+
+    document.getElementById("data").value=
+    hoje;
+
+    document.getElementById("kmInicial").value="";
+    document.getElementById("kmFinal").value="";
+    document.getElementById("complemento").value="";
+
 
     montarCampos();
 }
 
 
-/* ================= EXCLUIR ================= */
+/* =====================================================
+   EXCLUIR
+===================================================== */
 
 function excluirApontamento(id){
 
-    if(!confirm("Deseja realmente excluir este apontamento?"))return;
+    if(
+        !confirm(
+            "Deseja realmente excluir este apontamento?"
+        )
+    )return;
 
-    apontamentos=apontamentos.filter(x=>x.id!==id);
-    filaEnvio=filaEnvio.filter(x=>x.id!==id);
+
+    apontamentos=
+    apontamentos.filter(
+        x=>x.id!==id
+    );
+
+
+    filaEnvio=
+    filaEnvio.filter(
+        x=>x.id!==id
+    );
+
 
     salvarLocal();
 
     renderHistorico();
+
     renderFila();
+
     gerarRelatorio();
 }
 
 
-/* ================= FILA ================= */
+/* =====================================================
+   FILA DE ENVIO
+===================================================== */
 
 function adicionarFila(){
 
-    const dados=coletarDados();
+    const dados=
+    coletarDados();
 
-    const existente=filaEnvio.findIndex(x=>x.id===dados.id);
+
+    const existente=
+    filaEnvio.findIndex(
+        x=>x.id===dados.id
+    );
+
 
     if(existente!==-1){
+
         filaEnvio[existente]=dados;
+
     }else{
+
         filaEnvio.push(dados);
+
     }
 
-    localStorage.setItem("filaEnvioObras",JSON.stringify(filaEnvio));
+
+    localStorage.setItem(
+        "filaEnvioObras",
+        JSON.stringify(filaEnvio)
+    );
+
 
     renderFila();
 
-    alert("✅ Adicionado à lista de envio!");
+    alert(
+        "✅ Adicionado à lista de envio!"
+    );
 }
 
 
 function removerFila(id){
 
-    filaEnvio=filaEnvio.filter(x=>x.id!==id);
+    filaEnvio=
+    filaEnvio.filter(
+        x=>x.id!==id
+    );
 
-    localStorage.setItem("filaEnvioObras",JSON.stringify(filaEnvio));
+
+    localStorage.setItem(
+        "filaEnvioObras",
+        JSON.stringify(filaEnvio)
+    );
+
 
     renderFila();
 }
@@ -1329,13 +2299,19 @@ function limparFila(){
 
     filaEnvio=[];
 
-    localStorage.setItem("filaEnvioObras",JSON.stringify(filaEnvio));
+    localStorage.setItem(
+        "filaEnvioObras",
+        JSON.stringify(filaEnvio)
+    );
+
 
     renderFila();
 }
 
 
-/* ================= MENSAGEM ================= */
+/* =====================================================
+   DATA
+===================================================== */
 
 function formatarData(data){
 
@@ -1347,173 +2323,348 @@ function formatarData(data){
 }
 
 
+/* =====================================================
+   TEXTO DO APONTAMENTO
+===================================================== */
+
 function gerarTextoApontamento(x,numero){
 
     let texto="";
 
-    texto+=`${String(numero).padStart(2,"0")} — ${x.servico || x.tipo}`;
+
+    texto+=
+    `${String(numero).padStart(2,"0")} — `+
+    `${x.servico||x.tipo}`;
+
 
     if(x.camada){
-        texto+=` — ${x.camada}`;
+
+        texto+=
+        ` — ${x.camada}`;
+
     }
 
-    texto+=`\nSentido: ${x.sentido}`;
 
-    texto+=`\nTrecho: KM ${x.kmInicial} a KM ${x.kmFinal}`;
+    texto+=
+    `\nSentido: ${x.sentido}`;
+
+
+    texto+=
+    `\nTrecho: KM ${x.kmInicial} a KM ${x.kmFinal}`;
+
 
     if(x.tipo==="CBUQ"){
 
-        texto+=`\nComprimento: ${x.comprimento.toFixed(2)} m`;
-        texto+=`\nLargura: ${x.largura.toFixed(2)} m`;
-        texto+=`\nEspessura: ${x.espessura.toFixed(3)} m`;
-        texto+=`\nDensidade: ${x.densidade.toFixed(3)} t/m³`;
-        texto+=`\nCálculo: ${x.comprimento.toFixed(2)} × ${x.largura.toFixed(2)} × ${x.espessura.toFixed(3)} × ${x.densidade.toFixed(3)}`;
-        texto+=`\nMassa Aplicada: ${x.resultado.toFixed(3)} ton`;
+        texto+=
+        `\nComprimento: ${x.comprimento.toFixed(2)} m`;
+
+        texto+=
+        `\nLargura: ${x.largura.toFixed(2)} m`;
+
+        texto+=
+        `\nEspessura: ${x.espessura.toFixed(3)} m`;
+
+        texto+=
+        `\nDensidade: ${x.densidade.toFixed(3)} t/m³`;
+
+        texto+=
+        `\nCálculo: ${x.comprimento.toFixed(2)} × ${x.largura.toFixed(2)} × ${x.espessura.toFixed(3)} × ${x.densidade.toFixed(3)}`;
+
+        texto+=
+        `\nMassa Aplicada: ${x.resultado.toFixed(3)} ton`;
 
     }
 
-    else if(x.tipo==="TSD" || x.tipo==="Imprimação"){
 
-        texto+=`\nComprimento: ${x.comprimento.toFixed(2)} m`;
-        texto+=`\nLargura: ${x.largura.toFixed(2)} m`;
-        texto+=`\nCálculo: ${x.comprimento.toFixed(2)} × ${x.largura.toFixed(2)}`;
-        texto+=`\nQuantidade: ${x.resultado.toFixed(2)} m²`;
+    else if(
+        x.tipo==="TSD" ||
+        x.tipo==="Imprimação"
+    ){
+
+        texto+=
+        `\nComprimento: ${x.comprimento.toFixed(2)} m`;
+
+        texto+=
+        `\nLargura: ${x.largura.toFixed(2)} m`;
+
+        texto+=
+        `\nCálculo: ${x.comprimento.toFixed(2)} × ${x.largura.toFixed(2)}`;
+
+        texto+=
+        `\nQuantidade: ${x.resultado.toFixed(2)} m²`;
 
     }
 
-    else if(x.tipo==="Drenagem" || x.tipo==="Sinalização"){
 
-        texto+=`\nQuantidade: ${x.resultado.toFixed(2)} ${x.unidade}`;
+    else if(
+        x.tipo==="Drenagem" ||
+        x.tipo==="Sinalização"
+    ){
+
+        texto+=
+        `\nQuantidade: ${x.resultado.toFixed(2)} ${x.unidade}`;
 
     }
+
 
     else{
 
-        texto+=`\nComprimento: ${x.comprimento.toFixed(2)} m`;
-        texto+=`\nLargura: ${x.largura.toFixed(2)} m`;
-        texto+=`\nAltura: ${x.altura.toFixed(3)} m`;
-        texto+=`\nCálculo: ${x.comprimento.toFixed(2)} × ${x.largura.toFixed(2)} × ${x.altura.toFixed(3)}`;
-        texto+=`\nQuantidade: ${x.resultado.toFixed(2)} m³`;
+        texto+=
+        `\nComprimento: ${x.comprimento.toFixed(2)} m`;
+
+        texto+=
+        `\nLargura: ${x.largura.toFixed(2)} m`;
+
+        texto+=
+        `\nAltura: ${x.altura.toFixed(3)} m`;
+
+        texto+=
+        `\nCálculo: ${x.comprimento.toFixed(2)} × ${x.largura.toFixed(2)} × ${x.altura.toFixed(3)}`;
+
+        texto+=
+        `\nQuantidade: ${x.resultado.toFixed(2)} m³`;
 
     }
+
+
+    if(x.complemento){
+
+        texto+=
+        `\nCOMPLEMENTO: ${x.complemento}`;
+
+    }
+
 
     return texto;
 }
 
 
+/* =====================================================
+   MENSAGEM
+===================================================== */
+
 function gerarMensagem(lista=filaEnvio){
 
     if(lista.length===0){
-        return"Não há apontamentos.";
+
+        return "Não há apontamentos.";
+
     }
 
-    const data=lista[0].data;
 
-    let texto=`APONTAMENTO DIÁRIO DE OBRAS\n\n`;
-    texto+=`Data: ${formatarData(data)}\n`;
-    texto+=`Quantidade de apontamentos: ${lista.length}\n\n`;
+    const data=
+    lista[0].data;
+
+
+    let texto=
+    `APONTAMENTO DIÁRIO DE OBRAS\n\n`;
+
+
+    texto+=
+    `Data: ${formatarData(data)}\n`;
+
+
+    texto+=
+    `Quantidade de apontamentos: ${lista.length}\n\n`;
+
 
     lista.forEach((x,i)=>{
 
-        texto+=gerarTextoApontamento(x,i+1);
+        texto+=
+        gerarTextoApontamento(
+            x,
+            i+1
+        );
 
         texto+="\n\n";
+
     });
 
-    texto+="RESUMO\n\n";
+
+    texto+=
+    "RESUMO\n\n";
+
 
     let comprimento=0;
     let toneladas=0;
     let volume=0;
     let area=0;
 
+
     lista.forEach(x=>{
 
         if(x.comprimento){
-            comprimento+=x.comprimento;
+
+            comprimento+=
+            x.comprimento;
+
         }
+
 
         if(x.tipo==="CBUQ"){
-            toneladas+=x.resultado;
+
+            toneladas+=
+            x.resultado;
+
         }
+
 
         if(x.unidade==="m³"){
-            volume+=x.resultado;
+
+            volume+=
+            x.resultado;
+
         }
 
+
         if(x.unidade==="m²"){
-            area+=x.resultado;
+
+            area+=
+            x.resultado;
+
         }
 
     });
 
-    texto+=`Comprimento total: ${comprimento.toFixed(2)} m\n`;
 
-    if(toneladas>0)
-        texto+=`Massa Aplicada Total: ${toneladas.toFixed(3)} ton\n`;
+    texto+=
+    `Comprimento total: ${comprimento.toFixed(2)} m\n`;
 
-    if(volume>0)
-        texto+=`Volume Total: ${volume.toFixed(2)} m³\n`;
 
-    if(area>0)
-        texto+=`Área Total: ${area.toFixed(2)} m²\n`;
+    if(toneladas>0){
+
+        texto+=
+        `Massa Aplicada Total: ${toneladas.toFixed(3)} ton\n`;
+
+    }
+
+
+    if(volume>0){
+
+        texto+=
+        `Volume Total: ${volume.toFixed(2)} m³\n`;
+
+    }
+
+
+    if(area>0){
+
+        texto+=
+        `Área Total: ${area.toFixed(2)} m²\n`;
+
+    }
+
 
     return texto;
 }
 
 
+/* =====================================================
+   COPIAR / WHATSAPP
+===================================================== */
+
 function copiarMensagem(){
 
-    navigator.clipboard.writeText(gerarMensagem())
-    .then(()=>alert("✅ Mensagem copiada!"));
+    navigator.clipboard
+    .writeText(
+        gerarMensagem()
+    )
+    .then(()=>{
+
+        alert(
+            "✅ Mensagem copiada!"
+        );
+
+    });
+
 }
 
 
 function enviarWhatsApp(){
 
-    const texto=gerarMensagem();
+    const texto=
+    gerarMensagem();
+
 
     window.open(
-        "https://wa.me/?text="+encodeURIComponent(texto),
+        "https://wa.me/?text="+
+        encodeURIComponent(texto),
         "_blank"
     );
 }
 
 
-/* ================= RENDER FILA ================= */
+/* =====================================================
+   RENDER FILA
+===================================================== */
 
 function renderFila(){
 
-    const div=document.getElementById("fila");
+    const div=
+    document.getElementById("fila");
+
 
     if(filaEnvio.length===0){
 
         div.innerHTML=
-        `<p>Nenhum apontamento adicionado à lista.</p>`;
+        `<div class="vazio">
+        Nenhum apontamento adicionado à lista.
+        </div>`;
 
         return;
+
     }
 
-    div.innerHTML=filaEnvio.map((x,i)=>`
+
+    div.innerHTML=
+    filaEnvio.map((x,i)=>`
 
         <div class="item">
 
-        <h3>${i+1}. ${x.servico || x.tipo}</h3>
+        <h3>
+        ${i+1}. ${x.servico||x.tipo}
+        </h3>
 
-        <span class="badge">${x.tipo}</span>
+        <span class="badge">
+        ${x.tipo}
+        </span>
 
-        ${x.camada?`<span class="badge">${x.camada}</span>`:""}
+        ${
+            x.camada
+            ?
+            `<span class="badge">${x.camada}</span>`
+            :
+            ""
+        }
 
-        <p><b>Trecho:</b> ${x.kmInicial} → ${x.kmFinal}</p>
+        <p>
+        <b>Trecho:</b>
+        ${x.kmInicial} → ${x.kmFinal}
+        </p>
 
-        <p><b>Quantidade:</b>
-        ${x.resultado.toFixed(3)} ${x.unidade}</p>
+        <p>
+        <b>Quantidade:</b>
+        ${x.resultado.toFixed(3)}
+        ${x.unidade}
+        </p>
+
+        ${
+            x.complemento
+            ?
+            `<p><b>Complemento:</b> ${x.complemento}</p>`
+            :
+            ""
+        }
 
         <div class="acoes">
-        <button class="btn-vermelho"
-        onclick="removerFila('${x.id}')">
+
+        <button
+        class="btn-vermelho"
+        onclick="removerFila('${x.id}')"
+        >
         🗑️ Remover
         </button>
+
         </div>
 
         </div>
@@ -1522,64 +2673,143 @@ function renderFila(){
 }
 
 
-/* ================= HISTÓRICO ================= */
+/* =====================================================
+   HISTÓRICO
+===================================================== */
 
 function renderHistorico(){
 
-    const div=document.getElementById("listaHistorico");
+    const div=
+    document.getElementById(
+        "listaHistorico"
+    );
 
-    const data=document.getElementById("filtroHistorico").value;
-    const tipo=document.getElementById("filtroTipo").value;
 
-    let lista=apontamentos;
+    const data=
+    document.getElementById(
+        "filtroHistorico"
+    ).value;
+
+
+    const tipo=
+    document.getElementById(
+        "filtroTipo"
+    ).value;
+
+
+    let lista=
+    apontamentos;
+
 
     if(data){
-        lista=lista.filter(x=>x.data===data);
+
+        lista=
+        lista.filter(
+            x=>x.data===data
+        );
+
     }
+
 
     if(tipo){
-        lista=lista.filter(x=>x.tipo===tipo);
+
+        lista=
+        lista.filter(
+            x=>x.tipo===tipo
+        );
+
     }
 
-    lista=[...lista].reverse();
+
+    lista=
+    [...lista].reverse();
+
 
     if(lista.length===0){
 
         div.innerHTML=
-        `<div class="card"><p>Nenhum apontamento encontrado.</p></div>`;
+        `<div class="card">
+        <div class="vazio">
+        Nenhum apontamento encontrado.
+        </div>
+        </div>`;
 
         return;
+
     }
 
-    div.innerHTML=lista.map(x=>`
+
+    div.innerHTML=
+    lista.map(x=>`
 
         <div class="item">
 
-        <h3>${x.servico || x.tipo}</h3>
+        <h3>
+        ${x.servico||x.tipo}
+        </h3>
 
-        <span class="badge">${x.tipo}</span>
+        <span class="badge">
+        ${x.tipo}
+        </span>
 
-        ${x.camada?`<span class="badge">${x.camada}</span>`:""}
+        ${
+            x.camada
+            ?
+            `<span class="badge">${x.camada}</span>`
+            :
+            ""
+        }
 
-        <p><b>Data:</b> ${formatarData(x.data)}</p>
-        <p><b>Sentido:</b> ${x.sentido}</p>
-        <p><b>Trecho:</b> KM ${x.kmInicial} → ${x.kmFinal}</p>
-        <p><b>Resultado:</b> ${x.resultado.toFixed(3)} ${x.unidade}</p>
+        <p>
+        <b>Data:</b>
+        ${formatarData(x.data)}
+        </p>
+
+        <p>
+        <b>Sentido:</b>
+        ${x.sentido}
+        </p>
+
+        <p>
+        <b>Trecho:</b>
+        KM ${x.kmInicial} →
+        ${x.kmFinal}
+        </p>
+
+        <p>
+        <b>Resultado:</b>
+        ${x.resultado.toFixed(3)}
+        ${x.unidade}
+        </p>
+
+        ${
+            x.complemento
+            ?
+            `<p><b>📝 COMPLEMENTO:</b> ${x.complemento}</p>`
+            :
+            ""
+        }
 
         <div class="acoes">
 
-        <button class="btn-amarelo"
-        onclick="editarApontamento('${x.id}')">
+        <button
+        class="btn-amarelo"
+        onclick="editarApontamento('${x.id}')"
+        >
         ✏️ Editar
         </button>
 
-        <button class="btn-vermelho"
-        onclick="excluirApontamento('${x.id}')">
+        <button
+        class="btn-vermelho"
+        onclick="excluirApontamento('${x.id}')"
+        >
         🗑️ Excluir
         </button>
 
-        <button class="btn-azul"
-        onclick="copiarApontamento('${x.id}')">
+        <button
+        class="btn-azul"
+        onclick="copiarApontamento('${x.id}')"
+        >
         📋 Copiar
         </button>
 
@@ -1591,95 +2821,195 @@ function renderHistorico(){
 }
 
 
-/* ================= COPIAR INDIVIDUAL ================= */
+/* =====================================================
+   COPIAR INDIVIDUAL
+===================================================== */
 
 function copiarApontamento(id){
 
-    const item=apontamentos.find(x=>x.id===id);
+    const item=
+    apontamentos.find(
+        x=>x.id===id
+    );
+
 
     if(!item)return;
 
-    const texto=gerarTextoApontamento(item,1);
 
-    navigator.clipboard.writeText(texto)
-    .then(()=>alert("✅ Copiado!"));
+    navigator.clipboard
+    .writeText(
+        gerarTextoApontamento(
+            item,
+            1
+        )
+    )
+    .then(()=>{
+
+        alert("✅ Copiado!");
+
+    });
 }
 
 
-/* ================= RELATÓRIOS ================= */
+/* =====================================================
+   RELATÓRIO
+===================================================== */
 
 function gerarRelatorio(){
 
-    const data=document.getElementById("dataRelatorio").value;
+    const data=
+    document.getElementById(
+        "dataRelatorio"
+    ).value;
 
-    let lista=apontamentos.filter(x=>x.data===data);
 
-    document.getElementById("relQtd").innerText=lista.length;
+    const lista=
+    apontamentos.filter(
+        x=>x.data===data
+    );
+
+
+    document.getElementById(
+        "relQtd"
+    ).innerText=
+    lista.length;
+
 
     let comprimento=0;
     let cbuq=0;
     let volume=0;
     let area=0;
 
+
     lista.forEach(x=>{
 
         if(x.comprimento){
-            comprimento+=x.comprimento;
+
+            comprimento+=
+            x.comprimento;
+
         }
+
 
         if(x.tipo==="CBUQ"){
-            cbuq+=x.resultado;
+
+            cbuq+=
+            x.resultado;
+
         }
+
 
         if(x.unidade==="m³"){
-            volume+=x.resultado;
+
+            volume+=
+            x.resultado;
+
         }
 
+
         if(x.unidade==="m²"){
-            area+=x.resultado;
+
+            area+=
+            x.resultado;
+
         }
 
     });
 
-    document.getElementById("relComprimento").innerText=
+
+    document.getElementById(
+        "relComprimento"
+    ).innerText=
     comprimento.toFixed(2)+" m";
 
-    document.getElementById("relCBUQ").innerText=
+
+    document.getElementById(
+        "relCBUQ"
+    ).innerText=
     cbuq.toFixed(3)+" ton";
 
-    document.getElementById("relVolume").innerText=
+
+    document.getElementById(
+        "relVolume"
+    ).innerText=
     volume.toFixed(2)+" m³";
 
-    document.getElementById("relArea").innerText=
+
+    document.getElementById(
+        "relArea"
+    ).innerText=
     area.toFixed(2)+" m²";
 
-    const div=document.getElementById("relatorioDetalhado");
+
+    const div=
+    document.getElementById(
+        "relatorioDetalhado"
+    );
+
 
     if(lista.length===0){
 
         div.innerHTML=
-        `<p>Nenhum apontamento encontrado para esta data.</p>`;
+        `<div class="vazio">
+        Nenhum apontamento encontrado para esta data.
+        </div>`;
 
         return;
+
     }
 
-    div.innerHTML=lista.map((x,i)=>`
+
+    div.innerHTML=
+    lista.map((x,i)=>`
 
         <div class="item">
 
-        <h3>${String(i+1).padStart(2,"0")} — ${x.servico || x.tipo}</h3>
+        <h3>
+        ${String(i+1).padStart(2,"0")}
+        —
+        ${x.servico||x.tipo}
+        </h3>
 
-        <span class="badge">${x.tipo}</span>
+        <span class="badge">
+        ${x.tipo}
+        </span>
 
-        ${x.camada?`<span class="badge">${x.camada}</span>`:""}
+        ${
+            x.camada
+            ?
+            `<span class="badge">${x.camada}</span>`
+            :
+            ""
+        }
 
-        <p><b>Sentido:</b> ${x.sentido}</p>
+        <p>
+        <b>Sentido:</b>
+        ${x.sentido}
+        </p>
 
-        <p><b>Trecho:</b>
-        KM ${x.kmInicial} → ${x.kmFinal}</p>
+        <p>
+        <b>Trecho:</b>
+        KM ${x.kmInicial}
+        →
+        ${x.kmFinal}
+        </p>
 
-        <p><b>Quantidade:</b>
-        ${x.resultado.toFixed(3)} ${x.unidade}</p>
+        <p>
+        <b>Quantidade:</b>
+        ${x.resultado.toFixed(3)}
+        ${x.unidade}
+        </p>
+
+        ${
+            x.complemento
+            ?
+            `<p>
+            <b>📝 COMPLEMENTO:</b>
+            ${x.complemento}
+            </p>`
+            :
+            ""
+        }
 
         </div>
 
@@ -1689,13 +3019,24 @@ function gerarRelatorio(){
 
 function textoRelatorio(){
 
-    const data=document.getElementById("dataRelatorio").value;
+    const data=
+    document.getElementById(
+        "dataRelatorio"
+    ).value;
 
-    const lista=apontamentos.filter(x=>x.data===data);
+
+    const lista=
+    apontamentos.filter(
+        x=>x.data===data
+    );
+
 
     if(lista.length===0){
-        return"Não há apontamentos nesta data.";
+
+        return "Não há apontamentos nesta data.";
+
     }
+
 
     return gerarMensagem(lista);
 }
@@ -1703,8 +3044,17 @@ function textoRelatorio(){
 
 function copiarRelatorio(){
 
-    navigator.clipboard.writeText(textoRelatorio())
-    .then(()=>alert("✅ Relatório copiado!"));
+    navigator.clipboard
+    .writeText(
+        textoRelatorio()
+    )
+    .then(()=>{
+
+        alert(
+            "✅ Relatório copiado!"
+        );
+
+    });
 }
 
 
@@ -1712,59 +3062,168 @@ function enviarRelatorioWhatsApp(){
 
     window.open(
         "https://wa.me/?text="+
-        encodeURIComponent(textoRelatorio()),
+        encodeURIComponent(
+            textoRelatorio()
+        ),
         "_blank"
     );
 }
 
 
-/* ================= CONFIG ================= */
+/* =====================================================
+   CONFIGURAÇÕES
+===================================================== */
 
 function carregarConfig(){
 
-    document.getElementById("densFaixas").value=config.densFaixas;
-    document.getElementById("densFaixa2").value=config.densFaixa2;
-    document.getElementById("densAcostamento").value=config.densAcostamento;
+    document.getElementById(
+        "densFaixas"
+    ).value=config.densFaixas;
 
-    document.getElementById("faixa1").value=config.faixa1;
-    document.getElementById("faixa2").value=config.faixa2;
-    document.getElementById("acostamento").value=config.acostamento;
-    document.getElementById("alca").value=config.alca;
-    document.getElementById("aceleracao").value=config.aceleracao;
-    document.getElementById("desaceleracao").value=config.desaceleracao;
-    document.getElementById("espessura").value=config.espessura;
+
+    document.getElementById(
+        "densFaixa2"
+    ).value=config.densFaixa2;
+
+
+    document.getElementById(
+        "densAcostamento"
+    ).value=config.densAcostamento;
+
+
+    document.getElementById(
+        "faixa1"
+    ).value=config.faixa1;
+
+
+    document.getElementById(
+        "faixa2"
+    ).value=config.faixa2;
+
+
+    document.getElementById(
+        "acostamento"
+    ).value=config.acostamento;
+
+
+    document.getElementById(
+        "alca"
+    ).value=config.alca;
+
+
+    document.getElementById(
+        "aceleracao"
+    ).value=config.aceleracao;
+
+
+    document.getElementById(
+        "desaceleracao"
+    ).value=config.desaceleracao;
+
+
+    document.getElementById(
+        "espessura"
+    ).value=config.espessura;
 }
 
 
 function salvarConfig(){
 
     config={
-        densFaixas:parseFloat(document.getElementById("densFaixas").value)||0,
-        densFaixa2:parseFloat(document.getElementById("densFaixa2").value)||0,
-        densAcostamento:parseFloat(document.getElementById("densAcostamento").value)||0,
 
-        faixa1:parseFloat(document.getElementById("faixa1").value)||0,
-        faixa2:parseFloat(document.getElementById("faixa2").value)||0,
-        acostamento:parseFloat(document.getElementById("acostamento").value)||0,
-        alca:parseFloat(document.getElementById("alca").value)||0,
-        aceleracao:parseFloat(document.getElementById("aceleracao").value)||0,
-        desaceleracao:parseFloat(document.getElementById("desaceleracao").value)||0,
+        densFaixas:
+        parseFloat(
+            document.getElementById(
+                "densFaixas"
+            ).value
+        )||0,
 
-        espessura:parseFloat(document.getElementById("espessura").value)||0
+        densFaixa2:
+        parseFloat(
+            document.getElementById(
+                "densFaixa2"
+            ).value
+        )||0,
+
+        densAcostamento:
+        parseFloat(
+            document.getElementById(
+                "densAcostamento"
+            ).value
+        )||0,
+
+
+        faixa1:
+        parseFloat(
+            document.getElementById(
+                "faixa1"
+            ).value
+        )||0,
+
+        faixa2:
+        parseFloat(
+            document.getElementById(
+                "faixa2"
+            ).value
+        )||0,
+
+        acostamento:
+        parseFloat(
+            document.getElementById(
+                "acostamento"
+            ).value
+        )||0,
+
+        alca:
+        parseFloat(
+            document.getElementById(
+                "alca"
+            ).value
+        )||0,
+
+        aceleracao:
+        parseFloat(
+            document.getElementById(
+                "aceleracao"
+            ).value
+        )||0,
+
+        desaceleracao:
+        parseFloat(
+            document.getElementById(
+                "desaceleracao"
+            ).value
+        )||0,
+
+
+        espessura:
+        parseFloat(
+            document.getElementById(
+                "espessura"
+            ).value
+        )||0
+
     };
+
 
     localStorage.setItem(
         "configObras",
         JSON.stringify(config)
     );
 
+
     montarCampos();
 
-    alert("✅ Configurações salvas!");
+
+    alert(
+        "✅ Configurações salvas!"
+    );
 }
 
 
-/* ================= LOCAL STORAGE ================= */
+/* =====================================================
+   SALVAR LOCAL
+===================================================== */
 
 function salvarLocal(){
 
@@ -1772,6 +3231,7 @@ function salvarLocal(){
         "apontamentosObras",
         JSON.stringify(apontamentos)
     );
+
 
     localStorage.setItem(
         "filaEnvioObras",
