@@ -1,10 +1,11 @@
-```html
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>APONTAMENTOS DE OBRAS</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
 *{
@@ -34,6 +35,12 @@ header h1{
 header p{
     margin-top:6px;
     opacity:.8;
+}
+
+.usuario-logado{
+    margin-top:10px;
+    font-size:14px;
+    opacity:.9;
 }
 
 nav{
@@ -294,6 +301,85 @@ button{
     color:#6b7280;
 }
 
+/* ================= LOGIN ================= */
+
+#telaLogin{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    background:linear-gradient(135deg,#111827,#374151);
+}
+
+.login-card{
+    width:100%;
+    max-width:430px;
+    background:white;
+    padding:30px;
+    border-radius:18px;
+    box-shadow:0 10px 35px #0005;
+}
+
+.login-logo{
+    text-align:center;
+    margin-bottom:25px;
+}
+
+.login-logo h1{
+    font-size:25px;
+    color:#111827;
+}
+
+.login-logo p{
+    color:#6b7280;
+    margin-top:7px;
+}
+
+.login-form{
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+}
+
+.login-form button{
+    width:100%;
+}
+
+.login-link{
+    text-align:center;
+    margin-top:18px;
+    color:#2563eb;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.login-link:hover{
+    text-decoration:underline;
+}
+
+.login-mensagem{
+    margin-top:15px;
+    padding:12px;
+    border-radius:8px;
+    display:none;
+    font-size:14px;
+}
+
+.login-erro{
+    background:#fee2e2;
+    color:#991b1b;
+}
+
+.login-sucesso{
+    background:#dcfce7;
+    color:#166534;
+}
+
+#app{
+    display:none;
+}
+
 @media(max-width:600px){
 
     header h1{
@@ -313,50 +399,234 @@ button{
 
 <body>
 
+<!-- =====================================================
+     TELA DE LOGIN
+===================================================== -->
+
+<div id="telaLogin">
+
+<div class="login-card">
+
+<div class="login-logo">
+
+<h1>🏗️ APONTAMENTOS DE OBRAS</h1>
+
+<p id="textoLogin">
+Entre na sua conta
+</p>
+
+</div>
+
+
+<div class="login-form">
+
+<div class="campo" id="campoNome" style="display:none">
+
+<label>Nome</label>
+
+<input
+type="text"
+id="loginNome"
+placeholder="Digite seu nome"
+>
+
+</div>
+
+
+<div class="campo">
+
+<label>E-mail</label>
+
+<input
+type="email"
+id="loginEmail"
+placeholder="Digite seu e-mail"
+>
+
+</div>
+
+
+<div class="campo">
+
+<label>Senha</label>
+
+<input
+type="password"
+id="loginSenha"
+placeholder="Digite sua senha"
+>
+
+</div>
+
+
+<div
+class="campo"
+id="campoConfirmarSenha"
+style="display:none"
+>
+
+<label>Confirmar senha</label>
+
+<input
+type="password"
+id="loginConfirmarSenha"
+placeholder="Digite a senha novamente"
+>
+
+</div>
+
+
+<button
+class="btn"
+id="btnLogin"
+onclick="fazerLogin()"
+>
+🔐 Entrar
+</button>
+
+
+<button
+class="btn-verde"
+id="btnCadastro"
+onclick="fazerCadastro()"
+style="display:none"
+>
+📝 Criar Conta
+</button>
+
+</div>
+
+
+<div
+id="loginMensagem"
+class="login-mensagem"
+></div>
+
+
+<div
+class="login-link"
+id="linkCadastro"
+onclick="mostrarCadastro()"
+>
+Ainda não tenho uma conta
+</div>
+
+
+<div
+class="login-link"
+id="linkLogin"
+onclick="mostrarLogin()"
+style="display:none"
+>
+Já tenho uma conta
+</div>
+
+</div>
+
+</div>
+
+
+<!-- =====================================================
+     APLICAÇÃO
+===================================================== -->
+
+<div id="app">
+
 <header>
-    <h1>🏗️ APONTAMENTOS DE OBRAS</h1>
-    <p>Sistema de controle e apontamento de serviços</p>
+
+<h1>🏗️ APONTAMENTOS DE OBRAS</h1>
+
+<p>
+Sistema de controle e apontamento de serviços
+</p>
+
+<div class="usuario-logado">
+👤 <span id="nomeUsuario">Usuário</span>
+
+<button
+class="btn-vermelho"
+onclick="fazerLogout()"
+style="margin-left:10px;padding:7px 12px;"
+>
+🚪 Sair
+</button>
+
+</div>
+
 </header>
 
+
 <nav>
-    <button class="ativo" onclick="mostrarPagina('novo',this)">
-        📝 Novo Apontamento
-    </button>
 
-    <button onclick="mostrarPagina('historico',this)">
-        📚 Histórico
-    </button>
+<button
+class="ativo"
+onclick="mostrarPagina('novo',this)"
+>
+📝 Novo Apontamento
+</button>
 
-    <button onclick="mostrarPagina('relatorios',this)">
-        📊 Relatórios
-    </button>
+<button
+onclick="mostrarPagina('historico',this)"
+>
+📚 Histórico
+</button>
 
-    <button onclick="mostrarPagina('config',this)">
-        ⚙️ Configurações
-    </button>
+<button
+onclick="mostrarPagina('relatorios',this)"
+>
+📊 Relatórios
+</button>
+
+<button
+onclick="mostrarPagina('config',this)"
+>
+⚙️ Configurações
+</button>
+
 </nav>
 
+
 <div class="container">
+
+<!-- =====================================================
+     NOVO APONTAMENTO
+===================================================== -->
 
 <section id="novo" class="pagina ativa">
 
 <div class="card">
 
-<h2 id="tituloFormulario">📝 Novo Apontamento</h2>
+<h2 id="tituloFormulario">
+📝 Novo Apontamento
+</h2>
 
-<input type="hidden" id="editandoId">
+<input
+type="hidden"
+id="editandoId"
+>
 
 <div class="grid">
 
 <div class="campo">
+
 <label>Data</label>
-<input type="date" id="data">
+
+<input
+type="date"
+id="data"
+>
+
 </div>
 
+
 <div class="campo">
+
 <label>Tipo de Serviço</label>
 
-<select id="tipo" onchange="montarCampos()">
+<select
+id="tipo"
+onchange="montarCampos()"
+>
 
 <option value="CBUQ">CBUQ</option>
 <option value="Terraplenagem">Terraplenagem</option>
@@ -369,23 +639,30 @@ button{
 <option value="Sinalização">Sinalização</option>
 
 </select>
+
 </div>
 
+
 <div class="campo">
+
 <label>Sentido</label>
 
 <select id="sentido">
+
 <option>Norte</option>
 <option>Sul</option>
 <option>Leste</option>
 <option>Oeste</option>
 <option>Ambos</option>
 <option>Outro</option>
+
 </select>
 
 </div>
 
+
 <div class="campo">
+
 <label>Km Inicial</label>
 
 <input
@@ -397,7 +674,9 @@ oninput="formatarKmCampo(this)"
 
 </div>
 
+
 <div class="campo">
+
 <label>Km Final</label>
 
 <input
@@ -410,6 +689,7 @@ oninput="formatarKmCampo(this)"
 </div>
 
 </div>
+
 
 <div class="complemento-box campo">
 
@@ -441,6 +721,7 @@ placeholder="Digite observações, informações adicionais ou detalhes do servi
 
 </div>
 
+
 <div class="botoes">
 
 <button
@@ -451,6 +732,7 @@ id="btnSalvar"
 💾 Salvar Apontamento
 </button>
 
+
 <button
 class="btn-amarelo"
 onclick="cancelarEdicao()"
@@ -459,6 +741,7 @@ style="display:none"
 >
 ❌ Cancelar Edição
 </button>
+
 
 <button
 class="btn-azul"
@@ -487,12 +770,14 @@ onclick="copiarMensagem()"
 📋 Copiar Mensagem
 </button>
 
+
 <button
 class="btn-verde"
 onclick="enviarWhatsApp()"
 >
 📱 Enviar WhatsApp
 </button>
+
 
 <button
 class="btn-vermelho"
@@ -507,6 +792,10 @@ onclick="limparFila()"
 
 </section>
 
+
+<!-- =====================================================
+     HISTÓRICO
+===================================================== -->
 
 <section id="historico" class="pagina">
 
@@ -527,6 +816,7 @@ onchange="renderHistorico()"
 >
 
 </div>
+
 
 <div class="campo">
 
@@ -556,10 +846,15 @@ onchange="renderHistorico()"
 
 </div>
 
+
 <div id="listaHistorico" class="lista"></div>
 
 </section>
 
+
+<!-- =====================================================
+     RELATÓRIOS
+===================================================== -->
 
 <section id="relatorios" class="pagina">
 
@@ -626,7 +921,11 @@ onchange="gerarRelatorio()"
 
 <h2>📋 Relatório Detalhado</h2>
 
-<div id="relatorioDetalhado" class="lista"></div>
+<div
+id="relatorioDetalhado"
+class="lista"
+></div>
+
 
 <div class="botoes">
 
@@ -636,6 +935,7 @@ onclick="copiarRelatorio()"
 >
 📋 Copiar Relatório
 </button>
+
 
 <button
 class="btn-verde"
@@ -651,11 +951,16 @@ onclick="enviarRelatorioWhatsApp()"
 </section>
 
 
+<!-- =====================================================
+     CONFIGURAÇÕES
+===================================================== -->
+
 <section id="config" class="pagina">
 
 <div class="card">
 
 <h2>⚙️ Configurações</h2>
+
 
 <div class="config-grupo">
 
@@ -665,17 +970,31 @@ onclick="enviarRelatorioWhatsApp()"
 
 <div class="campo">
 <label>Densidade Faixa 1 (t/m³)</label>
-<input type="number" step="0.001" id="densFaixas">
+<input
+type="number"
+step="0.001"
+id="densFaixas"
+>
 </div>
+
 
 <div class="campo">
 <label>Densidade Faixa 2 (t/m³)</label>
-<input type="number" step="0.001" id="densFaixa2">
+<input
+type="number"
+step="0.001"
+id="densFaixa2"
+>
 </div>
+
 
 <div class="campo">
 <label>Densidade Acostamento (t/m³)</label>
-<input type="number" step="0.001" id="densAcostamento">
+<input
+type="number"
+step="0.001"
+id="densAcostamento"
+>
 </div>
 
 </div>
@@ -691,32 +1010,61 @@ onclick="enviarRelatorioWhatsApp()"
 
 <div class="campo">
 <label>Faixa 1 (m)</label>
-<input type="number" step="0.01" id="faixa1">
+<input
+type="number"
+step="0.01"
+id="faixa1"
+>
 </div>
+
 
 <div class="campo">
 <label>Faixa 2 (m)</label>
-<input type="number" step="0.01" id="faixa2">
+<input
+type="number"
+step="0.01"
+id="faixa2"
+>
 </div>
+
 
 <div class="campo">
 <label>Acostamento (m)</label>
-<input type="number" step="0.01" id="acostamento">
+<input
+type="number"
+step="0.01"
+id="acostamento"
+>
 </div>
+
 
 <div class="campo">
 <label>Alça de Retorno/Acesso (m)</label>
-<input type="number" step="0.01" id="alca">
+<input
+type="number"
+step="0.01"
+id="alca"
+>
 </div>
+
 
 <div class="campo">
 <label>Aceleração (m)</label>
-<input type="number" step="0.01" id="aceleracao">
+<input
+type="number"
+step="0.01"
+id="aceleracao"
+>
 </div>
+
 
 <div class="campo">
 <label>Desaceleração (m)</label>
-<input type="number" step="0.01" id="desaceleracao">
+<input
+type="number"
+step="0.01"
+id="desaceleracao"
+>
 </div>
 
 </div>
@@ -760,18 +1108,43 @@ onclick="salvarConfig()"
 
 </div>
 
+</div>
+
 
 <script>
 
-let apontamentos =
-JSON.parse(localStorage.getItem("apontamentosObras")) || [];
+/* =====================================================
+   SUPABASE
+===================================================== */
 
-let filaEnvio =
-JSON.parse(localStorage.getItem("filaEnvioObras")) || [];
+const SUPABASE_URL =
+"https://wsfhttdbylwmfndxbkou.supabase.co";
+
+const SUPABASE_KEY =
+"sb_publishable_1bWLCcqIILVSiwoildT6cQ_qYhQUHan";
+
+const supabaseClient =
+window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+);
 
 
-let config =
-JSON.parse(localStorage.getItem("configObras")) || {
+/* =====================================================
+   VARIÁVEIS
+===================================================== */
+
+let usuarioAtual=null;
+
+let apontamentos=[];
+
+let filaEnvio=
+JSON.parse(
+    localStorage.getItem("filaEnvioObras")
+)||[];
+
+
+let config={
 
     densFaixas:2.362,
     densFaixa2:2.362,
@@ -786,55 +1159,1127 @@ JSON.parse(localStorage.getItem("configObras")) || {
     desaceleracao:3.50,
 
     espessura:0.05
-
 };
 
 
-const hoje =
-new Date().toISOString().split("T")[0];
-
-document.getElementById("data").value=hoje;
-document.getElementById("dataRelatorio").value=hoje;
-
-carregarConfig();
-
-montarCampos();
-
-renderFila();
-
-renderHistorico();
-
-gerarRelatorio();
+const hoje=
+new Date()
+.toISOString()
+.split("T")[0];
 
 
-function mostrarPagina(id,botao){
+/* =====================================================
+   INICIALIZAÇÃO
+===================================================== */
 
-    document.querySelectorAll(".pagina")
-    .forEach(p=>{
-        p.classList.remove("ativa");
-    });
+document.addEventListener(
+    "DOMContentLoaded",
+    iniciar
+);
 
-    document.getElementById(id)
-    .classList.add("ativa");
 
-    document.querySelectorAll("nav button")
-    .forEach(b=>{
-        b.classList.remove("ativo");
-    });
+async function iniciar(){
 
-    if(botao){
-        botao.classList.add("ativo");
+    document.getElementById("data").value=hoje;
+
+    document.getElementById(
+        "dataRelatorio"
+    ).value=hoje;
+
+
+    const {
+        data:{
+            session
+        }
+    }=
+    await supabaseClient
+    .auth
+    .getSession();
+
+
+    if(session){
+
+        await entrarNoSistema(
+            session
+        );
+
+    }else{
+
+        mostrarTelaLogin();
+
     }
 
-    if(id==="historico"){
-        renderHistorico();
-    }
 
-    if(id==="relatorios"){
-        gerarRelatorio();
-    }
+    supabaseClient
+    .auth
+    .onAuthStateChange(
+        async(event,session)=>{
+
+            if(session){
+
+                await entrarNoSistema(
+                    session
+                );
+
+            }else{
+
+                sairDoSistemaVisual();
+
+            }
+
+        }
+    );
+
 }
 
+
+/* =====================================================
+   LOGIN / CADASTRO
+===================================================== */
+
+function mostrarTelaLogin(){
+
+    document.getElementById(
+        "telaLogin"
+    ).style.display="flex";
+
+    document.getElementById(
+        "app"
+    ).style.display="none";
+
+}
+
+
+function mostrarCadastro(){
+
+    document.getElementById(
+        "textoLogin"
+    ).innerText=
+    "Crie sua conta";
+
+    document.getElementById(
+        "campoNome"
+    ).style.display="flex";
+
+    document.getElementById(
+        "campoConfirmarSenha"
+    ).style.display="flex";
+
+    document.getElementById(
+        "btnLogin"
+    ).style.display="none";
+
+    document.getElementById(
+        "btnCadastro"
+    ).style.display="block";
+
+    document.getElementById(
+        "linkCadastro"
+    ).style.display="none";
+
+    document.getElementById(
+        "linkLogin"
+    ).style.display="block";
+
+    limparMensagemLogin();
+
+}
+
+
+function mostrarLogin(){
+
+    document.getElementById(
+        "textoLogin"
+    ).innerText=
+    "Entre na sua conta";
+
+    document.getElementById(
+        "campoNome"
+    ).style.display="none";
+
+    document.getElementById(
+        "campoConfirmarSenha"
+    ).style.display="none";
+
+    document.getElementById(
+        "btnLogin"
+    ).style.display="block";
+
+    document.getElementById(
+        "btnCadastro"
+    ).style.display="none";
+
+    document.getElementById(
+        "linkCadastro"
+    ).style.display="block";
+
+    document.getElementById(
+        "linkLogin"
+    ).style.display="none";
+
+    limparMensagemLogin();
+
+}
+
+
+function mostrarMensagemLogin(
+    mensagem,
+    sucesso=false
+){
+
+    const div=
+    document.getElementById(
+        "loginMensagem"
+    );
+
+    div.innerText=mensagem;
+
+    div.style.display="block";
+
+    div.className=
+    "login-mensagem "+
+    (
+        sucesso
+        ?
+        "login-sucesso"
+        :
+        "login-erro"
+    );
+
+}
+
+
+function limparMensagemLogin(){
+
+    const div=
+    document.getElementById(
+        "loginMensagem"
+    );
+
+    div.innerText="";
+
+    div.style.display="none";
+
+}
+
+
+async function fazerCadastro(){
+
+    limparMensagemLogin();
+
+
+    const nome=
+    document.getElementById(
+        "loginNome"
+    ).value.trim();
+
+
+    const email=
+    document.getElementById(
+        "loginEmail"
+    ).value.trim();
+
+
+    const senha=
+    document.getElementById(
+        "loginSenha"
+    ).value;
+
+
+    const confirmar=
+    document.getElementById(
+        "loginConfirmarSenha"
+    ).value;
+
+
+    if(!nome){
+
+        mostrarMensagemLogin(
+            "Digite seu nome."
+        );
+
+        return;
+
+    }
+
+
+    if(!email){
+
+        mostrarMensagemLogin(
+            "Digite seu e-mail."
+        );
+
+        return;
+
+    }
+
+
+    if(senha.length<6){
+
+        mostrarMensagemLogin(
+            "A senha precisa ter pelo menos 6 caracteres."
+        );
+
+        return;
+
+    }
+
+
+    if(senha!==confirmar){
+
+        mostrarMensagemLogin(
+            "As senhas não são iguais."
+        );
+
+        return;
+
+    }
+
+
+    const {
+        data,
+        error
+    }=
+    await supabaseClient
+    .auth
+    .signUp({
+
+        email:email,
+
+        password:senha,
+
+        options:{
+            data:{
+                nome:nome
+            }
+        }
+
+    });
+
+
+    if(error){
+
+        mostrarMensagemLogin(
+            error.message
+        );
+
+        return;
+
+    }
+
+
+    /*
+     * Dependendo da configuração de confirmação
+     * de e-mail do Supabase, pode existir sessão
+     * imediatamente ou não.
+     */
+
+    if(data.session){
+
+        mostrarMensagemLogin(
+            "✅ Conta criada! Entrando...",
+            true
+        );
+
+    }else{
+
+        mostrarMensagemLogin(
+            "✅ Conta criada! Verifique seu e-mail para confirmar a conta.",
+            true
+        );
+
+    }
+
+}
+
+
+async function fazerLogin(){
+
+    limparMensagemLogin();
+
+
+    const email=
+    document.getElementById(
+        "loginEmail"
+    ).value.trim();
+
+
+    const senha=
+    document.getElementById(
+        "loginSenha"
+    ).value;
+
+
+    if(!email || !senha){
+
+        mostrarMensagemLogin(
+            "Digite o e-mail e a senha."
+        );
+
+        return;
+
+    }
+
+
+    const {
+        data,
+        error
+    }=
+    await supabaseClient
+    .auth
+    .signInWithPassword({
+
+        email:email,
+
+        password:senha
+
+    });
+
+
+    if(error){
+
+        mostrarMensagemLogin(
+            "E-mail ou senha incorretos."
+        );
+
+        return;
+
+    }
+
+
+    if(data.session){
+
+        mostrarMensagemLogin(
+            "✅ Login realizado!",
+            true
+        );
+
+    }
+
+}
+
+
+async function fazerLogout(){
+
+    await supabaseClient
+    .auth
+    .signOut();
+
+}
+
+
+function sairDoSistemaVisual(){
+
+    usuarioAtual=null;
+
+    apontamentos=[];
+
+
+    document.getElementById(
+        "app"
+    ).style.display="none";
+
+
+    document.getElementById(
+        "telaLogin"
+    ).style.display="flex";
+
+
+    mostrarLogin();
+
+}
+
+
+/* =====================================================
+   ENTRAR NO SISTEMA
+===================================================== */
+
+async function entrarNoSistema(session){
+
+    if(!session)return;
+
+
+    usuarioAtual=session.user;
+
+
+    document.getElementById(
+        "telaLogin"
+    ).style.display="none";
+
+
+    document.getElementById(
+        "app"
+    ).style.display="block";
+
+
+    let nome=
+    session.user.user_metadata?.nome
+    ||
+    session.user.email
+    ||
+    "Usuário";
+
+
+    /*
+     * Tenta buscar o perfil criado pelo trigger.
+     */
+
+    const {
+        data:perfil
+    }=
+    await supabaseClient
+    .from("profiles")
+    .select("nome")
+    .eq("id",session.user.id)
+    .maybeSingle();
+
+
+    if(perfil?.nome){
+
+        nome=perfil.nome;
+
+    }
+
+
+    document.getElementById(
+        "nomeUsuario"
+    ).innerText=nome;
+
+
+    await carregarApontamentos();
+
+    await carregarConfigBanco();
+
+
+    montarCampos();
+
+    renderFila();
+
+    renderHistorico();
+
+    gerarRelatorio();
+
+}
+
+
+/* =====================================================
+   BANCO — APONTAMENTOS
+===================================================== */
+
+function bancoParaObjeto(row){
+
+    return {
+
+        id:String(row.id),
+
+        data:row.data,
+
+        tipo:row.tipo,
+
+        sentido:row.sentido||"",
+
+        kmInicial:row.km_inicial||"",
+
+        kmFinal:row.km_final||"",
+
+        complemento:row.complemento||"",
+
+        servico:row.servico||"",
+
+        quantidade:
+        row.quantidade!==null
+        ?
+        Number(row.quantidade)
+        :
+        0,
+
+        unidade:row.unidade||"",
+
+        camada:row.camada||"",
+
+        comprimento:
+        row.comprimento!==null
+        ?
+        Number(row.comprimento)
+        :
+        0,
+
+        largura:
+        row.largura!==null
+        ?
+        Number(row.largura)
+        :
+        0,
+
+        espessura:
+        row.espessura!==null
+        ?
+        Number(row.espessura)
+        :
+        0,
+
+        densidade:
+        row.densidade!==null
+        ?
+        Number(row.densidade)
+        :
+        0,
+
+        resultado:
+        row.toneladas!==null
+        ?
+        Number(row.toneladas)
+        :
+        0,
+
+        criadoEm:row.criado_em
+
+    };
+
+}
+
+
+async function carregarApontamentos(){
+
+    if(!usuarioAtual)return;
+
+
+    const {
+        data,
+        error
+    }=
+    await supabaseClient
+    .from("apontamentos")
+    .select("*")
+    .eq(
+        "usuario_id",
+        usuarioAtual.id
+    )
+    .order(
+        "criado_em",
+        {
+            ascending:false
+        }
+    );
+
+
+    if(error){
+
+        console.error(error);
+
+        alert(
+            "❌ Erro ao carregar os apontamentos."
+        );
+
+        return;
+
+    }
+
+
+    apontamentos=
+    (data||[])
+    .map(bancoParaObjeto);
+
+
+    renderHistorico();
+
+    gerarRelatorio();
+
+}
+
+
+function objetoParaBanco(dados){
+
+    return {
+
+        usuario_id:
+        usuarioAtual.id,
+
+        data:dados.data,
+
+        tipo:dados.tipo,
+
+        sentido:dados.sentido,
+
+        km_inicial:dados.kmInicial,
+
+        km_final:dados.kmFinal,
+
+        complemento:dados.complemento||null,
+
+        servico:dados.servico||null,
+
+        quantidade:
+        dados.quantidade??null,
+
+        unidade:dados.unidade||null,
+
+        camada:dados.camada||null,
+
+        comprimento:
+        dados.comprimento??null,
+
+        largura:
+        dados.largura??null,
+
+        espessura:
+        dados.espessura??null,
+
+        densidade:
+        dados.densidade??null,
+
+        toneladas:
+        dados.resultado??0
+
+    };
+
+}
+
+
+async function salvarApontamento(){
+
+    if(!usuarioAtual){
+
+        alert("Faça login primeiro.");
+
+        return;
+
+    }
+
+
+    const dados=
+    coletarDados();
+
+
+    const editando=
+    document.getElementById(
+        "editandoId"
+    ).value;
+
+
+    const banco=
+    objetoParaBanco(dados);
+
+
+    if(editando){
+
+        const {
+            data,
+            error
+        }=
+        await supabaseClient
+        .from("apontamentos")
+        .update(banco)
+        .eq("id",editando)
+        .eq(
+            "usuario_id",
+            usuarioAtual.id
+        )
+        .select()
+        .single();
+
+
+        if(error){
+
+            console.error(error);
+
+            alert(
+                "❌ Erro ao atualizar o apontamento."
+            );
+
+            return;
+
+        }
+
+
+        const novo=
+        bancoParaObjeto(data);
+
+
+        const index=
+        apontamentos.findIndex(
+            x=>x.id===String(editando)
+        );
+
+
+        if(index!==-1){
+
+            apontamentos[index]=novo;
+
+        }
+
+
+        const filaIndex=
+        filaEnvio.findIndex(
+            x=>x.id===String(editando)
+        );
+
+
+        if(filaIndex!==-1){
+
+            filaEnvio[filaIndex]=novo;
+
+            localStorage.setItem(
+                "filaEnvioObras",
+                JSON.stringify(filaEnvio)
+            );
+
+        }
+
+
+        alert(
+            "✅ Apontamento atualizado!"
+        );
+
+
+    }else{
+
+        const {
+            data,
+            error
+        }=
+        await supabaseClient
+        .from("apontamentos")
+        .insert(banco)
+        .select()
+        .single();
+
+
+        if(error){
+
+            console.error(error);
+
+            alert(
+                "❌ Erro ao salvar o apontamento."
+            );
+
+            return;
+
+        }
+
+
+        apontamentos.unshift(
+            bancoParaObjeto(data)
+        );
+
+
+        alert(
+            "✅ Apontamento salvo!"
+        );
+
+    }
+
+
+    cancelarEdicao();
+
+    renderHistorico();
+
+    renderFila();
+
+    gerarRelatorio();
+
+}
+
+
+async function excluirApontamento(id){
+
+    if(
+        !confirm(
+            "Deseja realmente excluir este apontamento?"
+        )
+    )return;
+
+
+    const {
+        error
+    }=
+    await supabaseClient
+    .from("apontamentos")
+    .delete()
+    .eq("id",id)
+    .eq(
+        "usuario_id",
+        usuarioAtual.id
+    );
+
+
+    if(error){
+
+        console.error(error);
+
+        alert(
+            "❌ Erro ao excluir o apontamento."
+        );
+
+        return;
+
+    }
+
+
+    apontamentos=
+    apontamentos.filter(
+        x=>x.id!==String(id)
+    );
+
+
+    filaEnvio=
+    filaEnvio.filter(
+        x=>x.id!==String(id)
+    );
+
+
+    localStorage.setItem(
+        "filaEnvioObras",
+        JSON.stringify(filaEnvio)
+    );
+
+
+    renderHistorico();
+
+    renderFila();
+
+    gerarRelatorio();
+
+}
+
+
+/* =====================================================
+   CONFIGURAÇÕES — BANCO
+===================================================== */
+
+async function carregarConfigBanco(){
+
+    if(!usuarioAtual)return;
+
+
+    const {
+        data,
+        error
+    }=
+    await supabaseClient
+    .from("configuracoes")
+    .select("*")
+    .eq(
+        "usuario_id",
+        usuarioAtual.id
+    )
+    .maybeSingle();
+
+
+    if(error){
+
+        console.error(error);
+
+        return;
+
+    }
+
+
+    if(data){
+
+        config={
+
+            densFaixas:Number(
+                data.densidade_faixa1
+            ),
+
+            densFaixa2:Number(
+                data.densidade_faixa2
+            ),
+
+            densAcostamento:Number(
+                data.densidade_acostamento
+            ),
+
+            faixa1:Number(
+                data.largura_faixa1
+            ),
+
+            faixa2:Number(
+                data.largura_faixa2
+            ),
+
+            acostamento:Number(
+                data.largura_acostamento
+            ),
+
+            alca:Number(
+                data.largura_alca
+            ),
+
+            aceleracao:Number(
+                data.largura_aceleracao
+            ),
+
+            desaceleracao:Number(
+                data.largura_desaceleracao
+            ),
+
+            espessura:Number(
+                data.espessura_cbuq
+            )
+
+        };
+
+    }
+
+
+    carregarConfig();
+
+}
+
+
+async function salvarConfig(){
+
+    if(!usuarioAtual){
+
+        alert("Faça login primeiro.");
+
+        return;
+
+    }
+
+
+    config={
+
+        densFaixas:
+        parseFloat(
+            document.getElementById(
+                "densFaixas"
+            ).value
+        )||0,
+
+        densFaixa2:
+        parseFloat(
+            document.getElementById(
+                "densFaixa2"
+            ).value
+        )||0,
+
+        densAcostamento:
+        parseFloat(
+            document.getElementById(
+                "densAcostamento"
+            ).value
+        )||0,
+
+        faixa1:
+        parseFloat(
+            document.getElementById(
+                "faixa1"
+            ).value
+        )||0,
+
+        faixa2:
+        parseFloat(
+            document.getElementById(
+                "faixa2"
+            ).value
+        )||0,
+
+        acostamento:
+        parseFloat(
+            document.getElementById(
+                "acostamento"
+            ).value
+        )||0,
+
+        alca:
+        parseFloat(
+            document.getElementById(
+                "alca"
+            ).value
+        )||0,
+
+        aceleracao:
+        parseFloat(
+            document.getElementById(
+                "aceleracao"
+            ).value
+        )||0,
+
+        desaceleracao:
+        parseFloat(
+            document.getElementById(
+                "desaceleracao"
+            ).value
+        )||0,
+
+        espessura:
+        parseFloat(
+            document.getElementById(
+                "espessura"
+            ).value
+        )||0
+
+    };
+
+
+    const {
+        error
+    }=
+    await supabaseClient
+    .from("configuracoes")
+    .update({
+
+        largura_faixa1:config.faixa1,
+
+        largura_faixa2:config.faixa2,
+
+        largura_acostamento:config.acostamento,
+
+        largura_alca:config.alca,
+
+        largura_aceleracao:config.aceleracao,
+
+        largura_desaceleracao:config.desaceleracao,
+
+        densidade_faixa1:config.densFaixas,
+
+        densidade_faixa2:config.densFaixa2,
+
+        densidade_acostamento:
+        config.densAcostamento,
+
+        espessura_cbuq:
+        config.espessura,
+
+        atualizado_em:
+        new Date().toISOString()
+
+    })
+    .eq(
+        "usuario_id",
+        usuarioAtual.id
+    );
+
+
+    if(error){
+
+        console.error(error);
+
+        alert(
+            "❌ Erro ao salvar as configurações."
+        );
+
+        return;
+
+    }
+
+
+    montarCampos();
+
+
+    alert(
+        "✅ Configurações salvas na nuvem!"
+    );
+
+}
+
+
+/* =====================================================
+   FORMULÁRIO
+===================================================== */
 
 function formatarKmCampo(campo){
 
@@ -855,26 +2300,36 @@ function formatarKmCampo(campo){
             km="0";
         }
 
-        campo.value=km+"+"+metros;
+        campo.value=
+        km+"+"+metros;
 
     }else{
 
-        valor=valor
+        valor=
+        valor
         .replace(/\D/g,"")
         .replace(/^0+/,"");
 
         campo.value=valor;
+
     }
+
 }
 
 
 function montarCampos(){
 
     const tipo=
-    document.getElementById("tipo").value;
+    document.getElementById(
+        "tipo"
+    ).value;
+
 
     const div=
-    document.getElementById("camposServico");
+    document.getElementById(
+        "camposServico"
+    );
+
 
     let html="";
 
@@ -1104,8 +2559,6 @@ function montarCampos(){
 
     }
 
-
-    /* ================= SINALIZAÇÃO ================= */
 
     else if(tipo==="Sinalização"){
 
@@ -1373,25 +2826,33 @@ function montarCampos(){
 
 
     if(tipo==="Drenagem"){
+
         atualizarUnidadeDrenagem();
+
     }
 
 
     if(tipo==="Sinalização"){
+
         atualizarUnidadeSinalizacao();
+
     }
 
 
     calcular();
+
 }
 
 
 function atualizarFaixa(){
 
     const faixa=
-    document.getElementById("faixa");
+    document.getElementById(
+        "faixa"
+    );
 
     if(!faixa)return;
+
 
     let largura=0;
     let densidade=0;
@@ -1400,55 +2861,86 @@ function atualizarFaixa(){
     switch(faixa.value){
 
         case "Faixa 1":
+
             largura=config.faixa1;
             densidade=config.densFaixas;
+
             break;
+
 
         case "Faixa 2":
+
             largura=config.faixa2;
             densidade=config.densFaixa2;
+
             break;
+
 
         case "Acostamento":
+
             largura=config.acostamento;
             densidade=config.densAcostamento;
+
             break;
+
 
         case "Alça de Retorno/Acesso":
+
             largura=config.alca;
             densidade=config.densFaixas;
+
             break;
+
 
         case "Aceleração":
+
             largura=config.aceleracao;
             densidade=config.densFaixas;
+
             break;
 
+
         case "Desaceleração":
+
             largura=config.desaceleracao;
             densidade=config.densFaixas;
+
             break;
+
     }
 
 
-    document.getElementById("largura").value=largura;
+    document.getElementById(
+        "largura"
+    ).value=largura;
 
-    document.getElementById("densidade").value=densidade;
 
-    document.getElementById("espessuraCampo").value=
-    config.espessura;
+    document.getElementById(
+        "densidade"
+    ).value=densidade;
+
+
+    document.getElementById(
+        "espessuraCampo"
+    ).value=config.espessura;
+
 
     calcular();
+
 }
 
 
 function atualizarUnidadeDrenagem(){
 
     const servico=
-    document.getElementById("servicoDrenagem");
+    document.getElementById(
+        "servicoDrenagem"
+    );
 
     const unidade=
-    document.getElementById("unidade");
+    document.getElementById(
+        "unidade"
+    );
 
     if(!servico || !unidade)return;
 
@@ -1470,26 +2962,32 @@ function atualizarUnidadeDrenagem(){
 
 
     if(lineares.includes(servico.value)){
+
         unidade.value="m";
+
     }else{
+
         unidade.value="Und";
+
     }
 
+
     calcular();
+
 }
 
-
-/* =====================================================
-   SINALIZAÇÃO — UNIDADE AUTOMÁTICA
-===================================================== */
 
 function atualizarUnidadeSinalizacao(){
 
     const servico=
-    document.getElementById("servicoSinalizacao");
+    document.getElementById(
+        "servicoSinalizacao"
+    );
 
     const unidade=
-    document.getElementById("unidade");
+    document.getElementById(
+        "unidade"
+    );
 
     if(!servico || !unidade)return;
 
@@ -1532,6 +3030,7 @@ function atualizarUnidadeSinalizacao(){
 
 
     calcular();
+
 }
 
 
@@ -1539,22 +3038,31 @@ function kmParaNumero(km){
 
     if(!km)return 0;
 
+
     km=String(km).trim();
+
 
     if(km.includes("+")){
 
-        const partes=km.split("+");
+        const partes=
+        km.split("+");
+
 
         const kmPrincipal=
         parseInt(partes[0])||0;
 
+
         const metros=
         parseInt(partes[1])||0;
 
+
         return kmPrincipal*1000+metros;
+
     }
 
+
     return parseFloat(km)||0;
+
 }
 
 
@@ -1562,22 +3070,35 @@ function calcularComprimentoKm(){
 
     const inicial=
     kmParaNumero(
-        document.getElementById("kmInicial").value
+        document.getElementById(
+            "kmInicial"
+        ).value
     );
+
 
     const final=
     kmParaNumero(
-        document.getElementById("kmFinal").value
+        document.getElementById(
+            "kmFinal"
+        ).value
     );
 
-    return Math.max(0,final-inicial);
+
+    return Math.max(
+        0,
+        final-inicial
+    );
+
 }
 
 
 function calcular(){
 
     const tipo=
-    document.getElementById("tipo").value;
+    document.getElementById(
+        "tipo"
+    ).value;
+
 
     let resultado=0;
 
@@ -1587,19 +3108,28 @@ function calcular(){
         const comprimento=
         calcularComprimentoKm();
 
+
         const largura=
         parseFloat(
-            document.getElementById("largura")?.value
+            document.getElementById(
+                "largura"
+            )?.value
         )||0;
+
 
         const espessura=
         parseFloat(
-            document.getElementById("espessuraCampo")?.value
+            document.getElementById(
+                "espessuraCampo"
+            )?.value
         )||0;
+
 
         const densidade=
         parseFloat(
-            document.getElementById("densidade")?.value
+            document.getElementById(
+                "densidade"
+            )?.value
         )||0;
 
 
@@ -1610,8 +3140,11 @@ function calcular(){
         densidade;
 
 
-        document.getElementById("resultado").innerText=
-        resultado.toFixed(3)+" toneladas";
+        document.getElementById(
+            "resultado"
+        ).innerText=
+        resultado.toFixed(3)+
+        " toneladas";
 
     }
 
@@ -1623,12 +3156,17 @@ function calcular(){
 
         const comprimento=
         parseFloat(
-            document.getElementById("comprimento")?.value
+            document.getElementById(
+                "comprimento"
+            )?.value
         )||0;
+
 
         const largura=
         parseFloat(
-            document.getElementById("largura")?.value
+            document.getElementById(
+                "largura"
+            )?.value
         )||0;
 
 
@@ -1636,8 +3174,11 @@ function calcular(){
         comprimento*largura;
 
 
-        document.getElementById("resultado").innerText=
-        resultado.toFixed(2)+" m²";
+        document.getElementById(
+            "resultado"
+        ).innerText=
+        resultado.toFixed(2)+
+        " m²";
 
     }
 
@@ -1649,18 +3190,27 @@ function calcular(){
 
         const quantidade=
         parseFloat(
-            document.getElementById("quantidade")?.value
+            document.getElementById(
+                "quantidade"
+            )?.value
         )||0;
 
+
         const unidade=
-        document.getElementById("unidade")?.value||"";
+        document.getElementById(
+            "unidade"
+        )?.value||"";
 
 
         resultado=quantidade;
 
 
-        document.getElementById("resultado").innerText=
-        resultado.toFixed(2)+" "+unidade;
+        document.getElementById(
+            "resultado"
+        ).innerText=
+        resultado.toFixed(2)+
+        " "+
+        unidade;
 
     }
 
@@ -1669,17 +3219,25 @@ function calcular(){
 
         const comprimento=
         parseFloat(
-            document.getElementById("comprimento")?.value
+            document.getElementById(
+                "comprimento"
+            )?.value
         )||0;
+
 
         const largura=
         parseFloat(
-            document.getElementById("largura")?.value
+            document.getElementById(
+                "largura"
+            )?.value
         )||0;
+
 
         const altura=
         parseFloat(
-            document.getElementById("altura")?.value
+            document.getElementById(
+                "altura"
+            )?.value
         )||0;
 
 
@@ -1689,42 +3247,58 @@ function calcular(){
         altura;
 
 
-        document.getElementById("resultado").innerText=
-        resultado.toFixed(2)+" m³";
+        document.getElementById(
+            "resultado"
+        ).innerText=
+        resultado.toFixed(2)+
+        " m³";
 
     }
+
 }
 
 
 function coletarDados(){
 
     const tipo=
-    document.getElementById("tipo").value;
+    document.getElementById(
+        "tipo"
+    ).value;
 
 
     let dados={
 
         id:
-        document.getElementById("editandoId").value
-        ||
-        Date.now().toString(),
+        document.getElementById(
+            "editandoId"
+        ).value||"",
 
         data:
-        document.getElementById("data").value,
+        document.getElementById(
+            "data"
+        ).value,
 
         tipo:tipo,
 
         sentido:
-        document.getElementById("sentido").value,
+        document.getElementById(
+            "sentido"
+        ).value,
 
         kmInicial:
-        document.getElementById("kmInicial").value,
+        document.getElementById(
+            "kmInicial"
+        ).value,
 
         kmFinal:
-        document.getElementById("kmFinal").value,
+        document.getElementById(
+            "kmFinal"
+        ).value,
 
         complemento:
-        document.getElementById("complemento").value,
+        document.getElementById(
+            "complemento"
+        ).value,
 
         criadoEm:
         new Date().toISOString()
@@ -1735,34 +3309,51 @@ function coletarDados(){
     if(tipo==="CBUQ"){
 
         dados.camada=
-        document.getElementById("camada").value;
+        document.getElementById(
+            "camada"
+        ).value;
+
 
         dados.servico=
-        document.getElementById("faixa").value;
+        document.getElementById(
+            "faixa"
+        ).value;
+
 
         dados.largura=
         parseFloat(
-            document.getElementById("largura").value
+            document.getElementById(
+                "largura"
+            ).value
         )||0;
+
 
         dados.espessura=
         parseFloat(
-            document.getElementById("espessuraCampo").value
+            document.getElementById(
+                "espessuraCampo"
+            ).value
         )||0;
+
 
         dados.densidade=
         parseFloat(
-            document.getElementById("densidade").value
+            document.getElementById(
+                "densidade"
+            ).value
         )||0;
+
 
         dados.comprimento=
         calcularComprimentoKm();
+
 
         dados.resultado=
         dados.comprimento*
         dados.largura*
         dados.espessura*
         dados.densidade;
+
 
         dados.unidade="ton";
 
@@ -1776,13 +3367,20 @@ function coletarDados(){
             "servicoDrenagem"
         ).value;
 
+
         dados.quantidade=
         parseFloat(
-            document.getElementById("quantidade").value
+            document.getElementById(
+                "quantidade"
+            ).value
         )||0;
 
+
         dados.unidade=
-        document.getElementById("unidade").value;
+        document.getElementById(
+            "unidade"
+        ).value;
+
 
         dados.resultado=
         dados.quantidade;
@@ -1797,20 +3395,23 @@ function coletarDados(){
             "servicoSinalizacao"
         ).value;
 
+
         dados.quantidade=
         parseFloat(
-            document.getElementById("quantidade").value
+            document.getElementById(
+                "quantidade"
+            ).value
         )||0;
 
-        /*
-         * A unidade é calculada automaticamente.
-         * Não depende do valor digitado pelo usuário.
-         */
 
         atualizarUnidadeSinalizacao();
 
+
         dados.unidade=
-        document.getElementById("unidade").value;
+        document.getElementById(
+            "unidade"
+        ).value;
+
 
         dados.resultado=
         dados.quantidade;
@@ -1825,17 +3426,24 @@ function coletarDados(){
 
         dados.comprimento=
         parseFloat(
-            document.getElementById("comprimento").value
+            document.getElementById(
+                "comprimento"
+            ).value
         )||0;
+
 
         dados.largura=
         parseFloat(
-            document.getElementById("largura").value
+            document.getElementById(
+                "largura"
+            ).value
         )||0;
+
 
         dados.resultado=
         dados.comprimento*
         dados.largura;
+
 
         dados.unidade="m²";
 
@@ -1845,27 +3453,40 @@ function coletarDados(){
     else{
 
         dados.camada=
-        document.getElementById("camada")?.value||"";
+        document.getElementById(
+            "camada"
+        )?.value||"";
+
 
         dados.comprimento=
         parseFloat(
-            document.getElementById("comprimento").value
+            document.getElementById(
+                "comprimento"
+            ).value
         )||0;
+
 
         dados.largura=
         parseFloat(
-            document.getElementById("largura").value
+            document.getElementById(
+                "largura"
+            ).value
         )||0;
+
 
         dados.altura=
         parseFloat(
-            document.getElementById("altura").value
+            document.getElementById(
+                "altura"
+            ).value
         )||0;
+
 
         dados.resultado=
         dados.comprimento*
         dados.largura*
         dados.altura;
+
 
         dados.unidade="m³";
 
@@ -1873,95 +3494,58 @@ function coletarDados(){
 
 
     return dados;
+
 }
 
 
-function salvarApontamento(){
-
-    const dados=
-    coletarDados();
-
-    const editando=
-    document.getElementById("editandoId").value;
-
-
-    if(editando){
-
-        const index=
-        apontamentos.findIndex(
-            x=>x.id===editando
-        );
-
-
-        if(index!==-1){
-            apontamentos[index]=dados;
-        }
-
-
-        const filaIndex=
-        filaEnvio.findIndex(
-            x=>x.id===editando
-        );
-
-
-        if(filaIndex!==-1){
-            filaEnvio[filaIndex]=dados;
-        }
-
-
-        alert("✅ Apontamento atualizado!");
-
-    }else{
-
-        apontamentos.push(dados);
-
-        alert("✅ Apontamento salvo!");
-
-    }
-
-
-    salvarLocal();
-
-    cancelarEdicao();
-
-    renderHistorico();
-
-    renderFila();
-
-    gerarRelatorio();
-}
-
+/* =====================================================
+   EDITAR
+===================================================== */
 
 function editarApontamento(id){
 
     const item=
     apontamentos.find(
-        x=>x.id===id
+        x=>x.id===String(id)
     );
+
 
     if(!item)return;
 
 
-    document.getElementById("editandoId").value=
-    item.id;
+    document.getElementById(
+        "editandoId"
+    ).value=item.id;
 
-    document.getElementById("data").value=
-    item.data;
 
-    document.getElementById("tipo").value=
-    item.tipo;
+    document.getElementById(
+        "data"
+    ).value=item.data;
 
-    document.getElementById("sentido").value=
-    item.sentido;
 
-    document.getElementById("kmInicial").value=
-    item.kmInicial;
+    document.getElementById(
+        "tipo"
+    ).value=item.tipo;
 
-    document.getElementById("kmFinal").value=
-    item.kmFinal;
 
-    document.getElementById("complemento").value=
-    item.complemento||"";
+    document.getElementById(
+        "sentido"
+    ).value=item.sentido;
+
+
+    document.getElementById(
+        "kmInicial"
+    ).value=item.kmInicial;
+
+
+    document.getElementById(
+        "kmFinal"
+    ).value=item.kmFinal;
+
+
+    document.getElementById(
+        "complemento"
+    ).value=item.complemento||"";
 
 
     montarCampos();
@@ -1969,19 +3553,27 @@ function editarApontamento(id){
 
     if(item.tipo==="CBUQ"){
 
-        document.getElementById("camada").value=
-        item.camada;
+        document.getElementById(
+            "camada"
+        ).value=item.camada;
 
-        document.getElementById("faixa").value=
-        item.servico;
+
+        document.getElementById(
+            "faixa"
+        ).value=item.servico;
+
 
         atualizarFaixa();
 
-        document.getElementById("espessuraCampo").value=
-        item.espessura;
 
-        document.getElementById("densidade").value=
-        item.densidade;
+        document.getElementById(
+            "espessuraCampo"
+        ).value=item.espessura;
+
+
+        document.getElementById(
+            "densidade"
+        ).value=item.densidade;
 
     }
 
@@ -1992,7 +3584,9 @@ function editarApontamento(id){
             "servicoDrenagem"
         ).value=item.servico;
 
+
         atualizarUnidadeDrenagem();
+
 
         document.getElementById(
             "quantidade"
@@ -2007,12 +3601,9 @@ function editarApontamento(id){
             "servicoSinalizacao"
         ).value=item.servico;
 
-        /*
-         * Recalcula a unidade automaticamente
-         * ao editar.
-         */
 
         atualizarUnidadeSinalizacao();
+
 
         document.getElementById(
             "quantidade"
@@ -2030,6 +3621,7 @@ function editarApontamento(id){
             "comprimento"
         ).value=item.comprimento;
 
+
         document.getElementById(
             "largura"
         ).value=item.largura;
@@ -2041,18 +3633,22 @@ function editarApontamento(id){
 
         if(document.getElementById("camada")){
 
-            document.getElementById("camada").value=
-            item.camada;
+            document.getElementById(
+                "camada"
+            ).value=item.camada;
 
         }
+
 
         document.getElementById(
             "comprimento"
         ).value=item.comprimento;
 
+
         document.getElementById(
             "largura"
         ).value=item.largura;
+
 
         document.getElementById(
             "altura"
@@ -2078,13 +3674,17 @@ function editarApontamento(id){
 
     document.getElementById(
         "btnCancelar"
-    ).style.display="inline-block";
+    ).style.display=
+    "inline-block";
 
 
     mostrarPagina(
         "novo",
-        document.querySelector("nav button")
+        document.querySelector(
+            "nav button"
+        )
     );
+
 }
 
 
@@ -2109,51 +3709,38 @@ function cancelarEdicao(){
 
     document.getElementById(
         "btnCancelar"
-    ).style.display="none";
+    ).style.display=
+    "none";
 
 
-    document.getElementById("data").value=
-    hoje;
+    document.getElementById(
+        "data"
+    ).value=hoje;
 
-    document.getElementById("kmInicial").value="";
-    document.getElementById("kmFinal").value="";
-    document.getElementById("complemento").value="";
+
+    document.getElementById(
+        "kmInicial"
+    ).value="";
+
+
+    document.getElementById(
+        "kmFinal"
+    ).value="";
+
+
+    document.getElementById(
+        "complemento"
+    ).value="";
 
 
     montarCampos();
+
 }
 
 
-function excluirApontamento(id){
-
-    if(
-        !confirm(
-            "Deseja realmente excluir este apontamento?"
-        )
-    )return;
-
-
-    apontamentos=
-    apontamentos.filter(
-        x=>x.id!==id
-    );
-
-
-    filaEnvio=
-    filaEnvio.filter(
-        x=>x.id!==id
-    );
-
-
-    salvarLocal();
-
-    renderHistorico();
-
-    renderFila();
-
-    gerarRelatorio();
-}
-
+/* =====================================================
+   FILA
+===================================================== */
 
 function adicionarFila(){
 
@@ -2173,6 +3760,19 @@ function adicionarFila(){
 
     }else{
 
+        /*
+         * Se ainda não salvou, cria um ID
+         * temporário somente para a fila.
+         */
+
+        if(!dados.id){
+
+            dados.id=
+            "fila-"+Date.now();
+
+        }
+
+
         filaEnvio.push(dados);
 
     }
@@ -2186,9 +3786,11 @@ function adicionarFila(){
 
     renderFila();
 
+
     alert(
         "✅ Adicionado à lista de envio!"
     );
+
 }
 
 
@@ -2196,7 +3798,7 @@ function removerFila(id){
 
     filaEnvio=
     filaEnvio.filter(
-        x=>x.id!==id
+        x=>x.id!==String(id)
     );
 
 
@@ -2207,6 +3809,7 @@ function removerFila(id){
 
 
     renderFila();
+
 }
 
 
@@ -2214,6 +3817,7 @@ function limparFila(){
 
     filaEnvio=[];
 
+
     localStorage.setItem(
         "filaEnvioObras",
         JSON.stringify(filaEnvio)
@@ -2221,20 +3825,32 @@ function limparFila(){
 
 
     renderFila();
+
 }
 
+
+/* =====================================================
+   TEXTOS
+===================================================== */
 
 function formatarData(data){
 
     if(!data)return"";
 
-    const [a,m,d]=data.split("-");
+
+    const [a,m,d]=
+    data.split("-");
+
 
     return `${d}/${m}/${a}`;
+
 }
 
 
-function gerarTextoApontamento(x,numero){
+function gerarTextoApontamento(
+    x,
+    numero
+){
 
     let texto="";
 
@@ -2265,17 +3881,22 @@ function gerarTextoApontamento(x,numero){
         texto+=
         `\nComprimento: ${x.comprimento.toFixed(2)} m`;
 
+
         texto+=
         `\nLargura: ${x.largura.toFixed(2)} m`;
+
 
         texto+=
         `\nEspessura: ${x.espessura.toFixed(3)} m`;
 
+
         texto+=
         `\nDensidade: ${x.densidade.toFixed(3)} t/m³`;
 
+
         texto+=
         `\nCálculo: ${x.comprimento.toFixed(2)} × ${x.largura.toFixed(2)} × ${x.espessura.toFixed(3)} × ${x.densidade.toFixed(3)}`;
+
 
         texto+=
         `\nMassa Aplicada: ${x.resultado.toFixed(3)} ton`;
@@ -2291,11 +3912,14 @@ function gerarTextoApontamento(x,numero){
         texto+=
         `\nComprimento: ${x.comprimento.toFixed(2)} m`;
 
+
         texto+=
         `\nLargura: ${x.largura.toFixed(2)} m`;
 
+
         texto+=
         `\nCálculo: ${x.comprimento.toFixed(2)} × ${x.largura.toFixed(2)}`;
+
 
         texto+=
         `\nQuantidade: ${x.resultado.toFixed(2)} m²`;
@@ -2319,14 +3943,18 @@ function gerarTextoApontamento(x,numero){
         texto+=
         `\nComprimento: ${x.comprimento.toFixed(2)} m`;
 
+
         texto+=
         `\nLargura: ${x.largura.toFixed(2)} m`;
+
 
         texto+=
         `\nAltura: ${x.altura.toFixed(3)} m`;
 
+
         texto+=
         `\nCálculo: ${x.comprimento.toFixed(2)} × ${x.largura.toFixed(2)} × ${x.altura.toFixed(3)}`;
+
 
         texto+=
         `\nQuantidade: ${x.resultado.toFixed(2)} m³`;
@@ -2343,10 +3971,13 @@ function gerarTextoApontamento(x,numero){
 
 
     return texto;
+
 }
 
 
-function gerarMensagem(lista=filaEnvio){
+function gerarMensagem(
+    lista=filaEnvio
+){
 
     if(lista.length===0){
 
@@ -2379,13 +4010,13 @@ function gerarMensagem(lista=filaEnvio){
             i+1
         );
 
+
         texto+="\n\n";
 
     });
 
 
-    texto+=
-    "RESUMO\n\n";
+    texto+="RESUMO\n\n";
 
 
     let comprimento=0;
@@ -2459,6 +4090,7 @@ function gerarMensagem(lista=filaEnvio){
 
 
     return texto;
+
 }
 
 
@@ -2490,13 +4122,20 @@ function enviarWhatsApp(){
         encodeURIComponent(texto),
         "_blank"
     );
+
 }
 
+
+/* =====================================================
+   RENDER FILA
+===================================================== */
 
 function renderFila(){
 
     const div=
-    document.getElementById("fila");
+    document.getElementById(
+        "fila"
+    );
 
 
     if(filaEnvio.length===0){
@@ -2505,6 +4144,7 @@ function renderFila(){
         `<div class="vazio">
         Nenhum apontamento adicionado à lista.
         </div>`;
+
 
         return;
 
@@ -2546,7 +4186,10 @@ function renderFila(){
         ${
             x.complemento
             ?
-            `<p><b>Complemento:</b> ${x.complemento}</p>`
+            `<p>
+            <b>Complemento:</b>
+            ${x.complemento}
+            </p>`
             :
             ""
         }
@@ -2565,8 +4208,13 @@ function renderFila(){
         </div>
 
     `).join("");
+
 }
 
+
+/* =====================================================
+   HISTÓRICO
+===================================================== */
 
 function renderHistorico(){
 
@@ -2574,6 +4222,9 @@ function renderHistorico(){
     document.getElementById(
         "listaHistorico"
     );
+
+
+    if(!div)return;
 
 
     const data=
@@ -2624,6 +4275,7 @@ function renderHistorico(){
         Nenhum apontamento encontrado.
         </div>
         </div>`;
+
 
         return;
 
@@ -2676,7 +4328,10 @@ function renderHistorico(){
         ${
             x.complemento
             ?
-            `<p><b>📝 COMPLEMENTO:</b> ${x.complemento}</p>`
+            `<p>
+            <b>📝 COMPLEMENTO:</b>
+            ${x.complemento}
+            </p>`
             :
             ""
         }
@@ -2709,14 +4364,19 @@ function renderHistorico(){
         </div>
 
     `).join("");
+
 }
 
+
+/* =====================================================
+   COPIAR APONTAMENTO
+===================================================== */
 
 function copiarApontamento(id){
 
     const item=
     apontamentos.find(
-        x=>x.id===id
+        x=>x.id===String(id)
     );
 
 
@@ -2732,11 +4392,18 @@ function copiarApontamento(id){
     )
     .then(()=>{
 
-        alert("✅ Copiado!");
+        alert(
+            "✅ Copiado!"
+        );
 
     });
+
 }
 
+
+/* =====================================================
+   RELATÓRIOS
+===================================================== */
 
 function gerarRelatorio(){
 
@@ -2803,25 +4470,29 @@ function gerarRelatorio(){
     document.getElementById(
         "relComprimento"
     ).innerText=
-    comprimento.toFixed(2)+" m";
+    comprimento.toFixed(2)+
+    " m";
 
 
     document.getElementById(
         "relCBUQ"
     ).innerText=
-    cbuq.toFixed(3)+" ton";
+    cbuq.toFixed(3)+
+    " ton";
 
 
     document.getElementById(
         "relVolume"
     ).innerText=
-    volume.toFixed(2)+" m³";
+    volume.toFixed(2)+
+    " m³";
 
 
     document.getElementById(
         "relArea"
     ).innerText=
-    area.toFixed(2)+" m²";
+    area.toFixed(2)+
+    " m²";
 
 
     const div=
@@ -2836,6 +4507,7 @@ function gerarRelatorio(){
         `<div class="vazio">
         Nenhum apontamento encontrado para esta data.
         </div>`;
+
 
         return;
 
@@ -2897,8 +4569,13 @@ function gerarRelatorio(){
         </div>
 
     `).join("");
+
 }
 
+
+/* =====================================================
+   TEXTO DO RELATÓRIO
+===================================================== */
 
 function textoRelatorio(){
 
@@ -2922,6 +4599,7 @@ function textoRelatorio(){
 
 
     return gerarMensagem(lista);
+
 }
 
 
@@ -2938,6 +4616,7 @@ function copiarRelatorio(){
         );
 
     });
+
 }
 
 
@@ -2950,8 +4629,78 @@ function enviarRelatorioWhatsApp(){
         ),
         "_blank"
     );
+
 }
 
+
+/* =====================================================
+   NAVEGAÇÃO
+===================================================== */
+
+function mostrarPagina(
+    id,
+    botao
+){
+
+    document.querySelectorAll(
+        ".pagina"
+    )
+    .forEach(p=>{
+
+        p.classList.remove(
+            "ativa"
+        );
+
+    });
+
+
+    document.getElementById(
+        id
+    ).classList.add(
+        "ativa"
+    );
+
+
+    document.querySelectorAll(
+        "nav button"
+    )
+    .forEach(b=>{
+
+        b.classList.remove(
+            "ativo"
+        );
+
+    });
+
+
+    if(botao){
+
+        botao.classList.add(
+            "ativo"
+        );
+
+    }
+
+
+    if(id==="historico"){
+
+        renderHistorico();
+
+    }
+
+
+    if(id==="relatorios"){
+
+        gerarRelatorio();
+
+    }
+
+}
+
+
+/* =====================================================
+   CONFIGURAÇÕES VISUAIS
+===================================================== */
 
 function carregarConfig(){
 
@@ -3003,119 +4752,10 @@ function carregarConfig(){
     document.getElementById(
         "espessura"
     ).value=config.espessura;
-}
 
-
-function salvarConfig(){
-
-    config={
-
-        densFaixas:
-        parseFloat(
-            document.getElementById(
-                "densFaixas"
-            ).value
-        )||0,
-
-        densFaixa2:
-        parseFloat(
-            document.getElementById(
-                "densFaixa2"
-            ).value
-        )||0,
-
-        densAcostamento:
-        parseFloat(
-            document.getElementById(
-                "densAcostamento"
-            ).value
-        )||0,
-
-
-        faixa1:
-        parseFloat(
-            document.getElementById(
-                "faixa1"
-            ).value
-        )||0,
-
-        faixa2:
-        parseFloat(
-            document.getElementById(
-                "faixa2"
-            ).value
-        )||0,
-
-        acostamento:
-        parseFloat(
-            document.getElementById(
-                "acostamento"
-            ).value
-        )||0,
-
-        alca:
-        parseFloat(
-            document.getElementById(
-                "alca"
-            ).value
-        )||0,
-
-        aceleracao:
-        parseFloat(
-            document.getElementById(
-                "aceleracao"
-            ).value
-        )||0,
-
-        desaceleracao:
-        parseFloat(
-            document.getElementById(
-                "desaceleracao"
-            ).value
-        )||0,
-
-
-        espessura:
-        parseFloat(
-            document.getElementById(
-                "espessura"
-            ).value
-        )||0
-
-    };
-
-
-    localStorage.setItem(
-        "configObras",
-        JSON.stringify(config)
-    );
-
-
-    montarCampos();
-
-
-    alert(
-        "✅ Configurações salvas!"
-    );
-}
-
-
-function salvarLocal(){
-
-    localStorage.setItem(
-        "apontamentosObras",
-        JSON.stringify(apontamentos)
-    );
-
-
-    localStorage.setItem(
-        "filaEnvioObras",
-        JSON.stringify(filaEnvio)
-    );
 }
 
 </script>
 
 </body>
 </html>
-```
